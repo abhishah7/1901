@@ -166,3 +166,79 @@ console.log(temp_d);
 // typeof 12
 // check type of variable use --> ex. typeof NaN, typeof null, 1 + "1", 1 == "1", 1 === "1"
 // why typeof NaN --> number
+// why typeof null --> object
+// why 1 + "1" --> string
+// why 1 == "1" --> true
+// why 1 === "1" --> false
+
+
+
+
+// operators
+// Arithmetic, comparison, logical, assignment, unary, ternary
+// Arithmetic:
+// +, -, /, ** %
+//+--> Add and concatenation
+// ex. 1+2, "user" + "name"
+//
+// ex. 21
+// /, *
+// ex. 240/2, 25*2
+// % (modulas) (sheshfal)
+// ex. 12%4 --> 0
+// ex. 9%2 --> 1
+// ** (square) (exposination)
+// ex. 2**3 --> 8
+// Comparison (ans: true, false)
+// >, <, >=, <=, ==, ===, !=, !==
+// Logical (ans: true, false)
+// &&, ||, !
+// && --> and --> 12<10 && 12>10
+// || --> or --> 12<10 || 12>10
+// ! --> not --> !(12<10)
+// Assignment
+// = 
+// +=, -=, *=, /=, %=, **=
+// ex. let =12; // assign the value to variable
+// ex. let +=12; // add the value to variable
+// ex. let *=12; // multiply the value to variable
+// ex. let /=12; // divide the value to variable
+// ex. let %=12; // modulas the value to variable
+// ex. let **=12; // square the value to variable
+
+
+
+// Unary
+// ++, --
+// a = 12;
+// ex. a++;
+// ex. a--;
+
+
+// Ternary
+// ?:   
+// ex. condition ? true : false;
+// 12 > 10 ? console.log("true") : console.log("false");
+// 12 < 10 ? console.log("true") : console.log("false");
+
+
+
+
+// typeof null --> object
+// typeof undefined --> undefined
+// typeof NaN --> number
+// typeof true --> boolean
+// typeof false --> boolean
+// typeof 12 --> number
+// typeof "12" --> string
+// typeof {} --> object
+// typeof [] --> object
+// typeof function --> function
+// typeof Symbol --> symbol
+// typeof BigInt --> bigint
+// typeof 12.3 --> number
+// typeof Infinity --> number
+
+// instanceof
+// let obj = {name: "abhishek", email: "test@test.com"};
+// console.log(obj instanceof Object);

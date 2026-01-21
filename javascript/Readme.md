@@ -40,6 +40,7 @@ const temp3 = "i like your knowledge"; // Block-scoped, immutable
 
 ## Hoisting & Temporal Dead Zone
 
+
 ### Hoisting Mechanism
 
 Hoisting splits variable declaration into two phases:
@@ -375,16 +376,532 @@ execute(greet, "Alice"); // Output: Hello, Alice!
 
 ---
 
+## Operators in JavaScript
+
+### Arithmetic Operators
+
+```javascript
+// Basic arithmetic
+let a = 20,
+  b = 10;
+
+console.log(a + b); // 30 (addition)
+console.log(a - b); // 10 (subtraction)
+console.log(a * b); // 200 (multiplication)
+console.log(a / b); // 2 (division)
+console.log(a % b); // 0 (modulus - remainder)
+console.log(a ** 2); // 400 (exponentiation - power)
+
+// String concatenation
+console.log("Hello " + "World"); // "Hello World"
+console.log("Age: " + 25); // "Age: 25" (number coerced to string)
+
+// Modulus examples
+console.log(12 % 4); // 0 (12 divided by 4 has no remainder)
+console.log(9 % 2); // 1 (9 divided by 2 has remainder 1)
+```
+
+**Key Point**: The `+` operator performs both addition and string concatenation depending on operand types.
+
+---
+
+### Comparison Operators
+
+```javascript
+let x = 15,
+  y = "15";
+
+// Comparison (returns boolean)
+console.log(x > 10); // true
+console.log(x < 20); // true
+console.log(x >= 15); // true
+console.log(x <= 15); // true
+
+// Loose equality (== - performs type coercion)
+console.log(x == y); // true (15 == "15" after coercion)
+
+// Strict equality (=== - no type coercion)
+console.log(x === y); // false (number !== string)
+
+// Inequality
+console.log(x != y); // false (loose equality)
+console.log(x !== y); // true (strict inequality)
+```
+
+**Best Practice**: Use `===` and `!==` to avoid unexpected type coercion.
+
+---
+
+### Logical Operators
+
+#### AND Operator (&&)
+
+```javascript
+// Example 1: Both conditions must be true
+let x = 10;
+let y = 20;
+
+if (x > 5 && y > 5) {
+  console.log("Both are greater than 5"); // Output
+} else {
+  console.log("One or both are not greater than 5");
+}
+```
+
+#### OR Operator (||)
+
+```javascript
+// Example 2: At least one condition must be true
+let isAdmin = true;
+let isLoggedIn = false;
+
+if (isAdmin || isLoggedIn) {
+  console.log("Access granted"); // Output
+} else {
+  console.log("Access Denied");
+}
+```
+
+#### NOT Operator (!)
+
+```javascript
+// Example 3: Inverts the boolean value
+let temp = 35;
+
+if (!(temp > 30)) {
+  console.log("Hot day");
+} else {
+  console.log("Pleasant day"); // Output
+}
+```
+
+#### Truthy & Falsy Values
+
+```javascript
+// Example 4: Understanding falsy values
+let a = 0;
+
+if (a) {
+  console.log("Truthy value");
+} else {
+  console.log("Falsy value"); // Output (0 is falsy)
+}
+
+// Other falsy values: "", null, undefined, NaN, false
+// All other values are truthy
+```
+
+**Truth Table**:
+
+- `true && true = true`
+- `true && false = false`
+- `true || false = true`
+- `false || false = false`
+
+---
+
+### Assignment Operators
+
+```javascript
+let value = 10;
+
+value += 5; // value = value + 5; → 15
+console.log(value); // 15
+
+value -= 3; // value = value - 3; → 12
+console.log(value); // 12
+
+value *= 2; // value = value * 2; → 24
+console.log(value); // 24
+
+value /= 4; // value = value / 4; → 6
+console.log(value); // 6
+
+value %= 4; // value = value % 4; → 2
+console.log(value); // 2
+
+value **= 3; // value = value ** 3; → 8
+console.log(value); // 8
+```
+
+---
+
+### Unary Operators
+
+#### Post-Increment (a++)
+
+```javascript
+// Example 8: Post-increment returns value then increments
+let a = 5;
+a++;
+console.log(a); // Output: 6
+```
+
+#### Pre-Increment (++a)
+
+```javascript
+// Example 9: Pre-increment increments then returns value
+let a = 8;
+++a;
+console.log(a); // Output: 9
+```
+
+#### Post vs Pre-Increment Difference
+
+```javascript
+// Example 10: Post-increment
+let b = 4;
+let c = b++;
+console.log(b, c); // Output: 5, 4 (c gets old value, b increments)
+
+// Example 11: Pre-increment
+let b = 4;
+let c = ++b;
+console.log(b, c); // Output: 5, 5 (b increments first, c gets new value)
+```
+
+#### Post-Decrement
+
+```javascript
+// Example 12: Post-decrement
+let m = 10;
+console.log(m--); // Output: 10
+console.log(m); // Output: 9
+```
+
+#### Complex Example
+
+```javascript
+// Example 13: Combining increment in expression
+let n = 5;
+let result = n++ + ++n;
+console.log(result); // Output: 11
+// n++ returns 5 (then n becomes 6), ++n increments n to 7 and returns 7
+// 5 + 7 = 12, but n++ happens after evaluation so result = 11
+```
+
+#### Increment in Function Context
+
+```javascript
+// Example 14: Increment with function
+let likes = 100;
+
+function likePost() {
+  return ++likes;
+}
+
+console.log(likePost()); // Output: 101
+console.log(likes); // Output: 101
+```
+
+#### Decrement in Condition
+
+```javascript
+// Example 15: Post-decrement in condition
+let count = 5;
+
+if (count-- === 5) {
+  console.log("Matched"); // Output (count was 5, now becomes 4)
+} else {
+  console.log("Not Matched");
+}
+```
+
+---
+
+### Ternary Conditional Operator
+
+#### Basic Ternary
+
+```javascript
+// Example 5: Basic grade assignment
+let score = 78;
+let grade = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : "D";
+console.log("Grade:", grade); // Output: Grade: C
+```
+
+#### Nested Ternary
+
+```javascript
+// Example 6: Status based on points
+let points = 120;
+let status = points >= 100 ? "Gold" : points >= 50 ? "Silver" : "Bronze";
+console.log("Status:", status); // Output: Status: Gold
+```
+
+#### Ternary with Logical Operators
+
+```javascript
+// Example 7: Combining logical operators with ternary
+let loggedIn = true;
+let hasToken = false;
+let access = loggedIn && hasToken ? "Allow" : "Deny";
+console.log("access:", access); // Output: access: Deny
+```
+
+**Syntax**: `condition ? valueIfTrue : valueIfFalse`
+
+---
+
+## Advanced Data Types & Objects
+
+### Objects (Reference Type)
+
+```javascript
+let user = {
+  uid: 1,
+  name: "Abhishek",
+  email: "abhishek@test.com",
+  greet: function (name) {
+    console.log(`Hello ${name}, welcome!`);
+  },
+};
+
+console.log(user.uid); // 1
+console.log(user["email"]); // abhishek@test.com
+user.greet("John"); // Hello John, welcome!
+```
+
+**Key Point**: Objects are passed by reference, not by value.
+
+---
+
+### Arrays (Reference Type)
+
+```javascript
+let numbers = [1, 2, 3, 4, 5];
+let mixed = ["name", 25, true, null, { key: "value" }];
+
+console.log(numbers[0]); // 1
+console.log(numbers.length); // 5
+
+// Array methods
+numbers.forEach(function (item) {
+  console.log(item);
+});
+// Output: 1, 2, 3, 4, 5
+
+// Array modification
+let arr = [1, 2, 3];
+arr.pop(); // Removes last element [1, 2]
+console.log(arr); // [1, 2]
+```
+
+**Key Point**: Arrays are reference types. Assigning an array to another variable creates a reference, not a copy.
+
+```javascript
+let temp_a = [1, 2, 3];
+let temp_b = temp_a; // temp_b points to same array
+temp_b.pop(); // Removes from original
+
+console.log(temp_a); // [1, 2]
+console.log(temp_b); // [1, 2]
+```
+
+---
+
+### Symbols (Unique Identifiers)
+
+```javascript
+// Symbols are unique and immutable
+let uid1 = Symbol("uid");
+let uid2 = Symbol("uid");
+
+console.log(uid1 === uid2); // false (each Symbol is unique)
+console.log(typeof uid1); // "symbol"
+
+// Use case: Avoid property name collisions
+let user = {
+  uid: 1,
+  name: "Test",
+  email: "test@test.com",
+};
+
+let privateId1 = Symbol("uid");
+let privateId2 = Symbol("uid");
+let privateId3 = Symbol("uid");
+
+user[privateId1] = "001";
+user[privateId2] = "002";
+user[privateId3] = "003";
+
+console.log(user);
+// { uid: 1, name: 'Test', email: 'test@test.com', [Symbol(uid)]: '001', [Symbol(uid)]: '002', [Symbol(uid)]: '003' }
+
+// Symbol properties are not enumerable
+for (let key in user) {
+  console.log(key); // Only: uid, name, email (Symbol keys excluded)
+}
+```
+
+---
+
+### Map (Modern Key-Value Storage)
+
+```javascript
+let map = new Map();
+
+// Set values
+map.set("name", "Abhishek");
+map.set("age", 25);
+map.set("email", "abhishek@test.com");
+
+// Get values
+console.log(map.get("name")); // "Abhishek"
+console.log(map.get("age")); // 25
+
+// Check existence
+console.log(map.has("name")); // true
+console.log(map.has("phone")); // false
+
+// Get size
+console.log(map.size); // 3
+
+// Delete entries
+map.delete("age");
+console.log(map.size); // 2
+
+// Iterate over Map
+map.forEach((value, key) => {
+  console.log(`${key}: ${value}`);
+});
+// Output: name: Abhishek, email: abhishek@test.com
+```
+
+**Difference from Objects**:
+
+- Maps can use any type as key (objects only allow strings/symbols)
+- Maps maintain insertion order
+- Maps have `.size` property
+- Maps have `.has()`, `.get()`, `.set()`, `.delete()` methods
+
+---
+
+### Proxy (Intercept & Control Object Operations)
+
+```javascript
+let user = {
+  uid: 1,
+  name: "Test",
+  email: "test@test.com",
+};
+
+// Create a Proxy to intercept get/set operations
+let proxy = new Proxy(user, {
+  get: function (target, key) {
+    console.log(`Getting value of ${key}`);
+    return target[key];
+  },
+  set: function (target, key, value) {
+    console.log(`Setting ${key} to ${value}`);
+    target[key] = value;
+  },
+});
+
+console.log(proxy.name);
+// Output: Getting value of name
+// Output: Test
+
+proxy.name = "John";
+// Output: Setting name to John
+
+console.log(user.name); // "John" (original object modified)
+```
+
+**Use Cases**:
+
+- Validation
+- Logging
+- Computed properties
+- Security control
+
+---
+
+### BigInt (Large Integer Handling)
+
+```javascript
+// Regular numbers have a limit
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+let num = 9090382398893;
+num = num + 18;
+console.log(num); // May lose precision
+
+// BigInt suffix 'n' for large numbers
+let num1 = 9090382398893n;
+num1 = num1 + 18n;
+console.log(num1); // 9090382398911n (correct precision maintained)
+
+// BigInt operations
+let big1 = 100n;
+let big2 = 20n;
+console.log(big1 + big2); // 120n
+console.log(big1 * big2); // 2000n
+console.log(big1 / big2); // 5n (integer division only)
+
+// Cannot mix BigInt and Number
+// console.log(100n + 20); // TypeError: Cannot mix BigInt and other types
+```
+
+**When to use**:
+
+- Working with numbers larger than `Number.MAX_SAFE_INTEGER`
+- Financial calculations
+- Large ID numbers
+- Cryptographic operations
+
+---
+
+## Primitive vs Reference Type Copying
+
+### Primitive Copy (By Value)
+
+```javascript
+let a = 12;
+let b = a; // Copy value
+a = a + 3;
+
+console.log(a); // 15
+console.log(b); // 12 (unchanged, separate copy)
+```
+
+**Behavior**: Primitives are copied by value. Each variable has its own independent copy.
+
+---
+
+### Reference Type Copying (By Reference)
+
+```javascript
+let tempA = [1, 2, 3];
+let tempB = tempA; // Reference copy (points to same array)
+tempB.pop(); // Remove element
+
+console.log(tempA); // [1, 2] (original affected!)
+console.log(tempB); // [1, 2]
+
+// To create a true copy of reference types:
+let tempC = [1, 2, 3];
+let tempD = [...tempC]; // Spread operator creates shallow copy
+tempD.pop();
+
+console.log(tempC); // [1, 2, 3] (original unchanged)
+console.log(tempD); // [1, 2]
+```
+
+**Key Difference**: Reference types share the same data in memory. Modifications through one variable affect the original.
+
+---
+
 ## Summary: Quick Reference
 
-| Aspect              | Details                                                    |
-| ------------------- | ---------------------------------------------------------- |
-| **Var Scope**       | Function-scoped, hoisted with `undefined`                  |
-| **Let/Const Scope** | Block-scoped, hoisted but in TDZ                           |
-| **Redeclaration**   | Only `var` allows redeclaration                            |
-| **Primitive Types** | String, Number, Boolean, Null, Undefined, Symbol, BigInt   |
-| **Reference Types** | Array, Object, Function                                    |
-| **Key Principle**   | Primitives passed by value; References passed by reference |
+| Aspect              | Details                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| **Var Scope**       | Function-scoped, hoisted with `undefined`                   |
+| **Let/Const Scope** | Block-scoped, hoisted but in TDZ                            |
+| **Redeclaration**   | Only `var` allows redeclaration                             |
+| **Primitive Types** | String, Number, Boolean, Null, Undefined, Symbol, BigInt    |
+| **Reference Types** | Array, Object, Function, Date, RegExp, Map, Set, Proxy      |
+| **Key Principle**   | Primitives passed by value; References passed by reference  |
+| **Operators**       | Arithmetic, Comparison, Logical, Assignment, Unary, Ternary |
 
 ---
 
