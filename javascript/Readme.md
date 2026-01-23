@@ -1924,79 +1924,539 @@ try {
 
 Strings have many built-in methods for manipulation and inspection.
 
-### String Case Methods
+### 1. String Case Conversion Methods
+
+#### toUpperCase()
 
 ```javascript
 let text = "Hello World";
 
 console.log(text.toUpperCase()); // Output: HELLO WORLD
+
+// Practical use
+let email = "john@example.com";
+console.log(email.toUpperCase()); // JOHN@EXAMPLE.COM
+
+// Case-insensitive comparison
+let input = "hello";
+console.log(input.toUpperCase() === "HELLO"); // true
+```
+
+**Use Cases**:
+
+- Normalizing input for comparison
+- Formatting text display
+- Validation (case-insensitive matching)
+
+---
+
+#### toLowerCase()
+
+```javascript
+let text = "Hello World";
+
 console.log(text.toLowerCase()); // Output: hello world
+
+// Practical use
+let userName = "JohnDoe";
+console.log(userName.toLowerCase()); // johndoe
+
+// API key normalization
+let apiKey = "ABC123XYZ";
+console.log(apiKey.toLowerCase()); // abc123xyz
+```
+
+**Use Cases**:
+
+- Standardizing user input
+- Creating URLs or filenames
+- Case-insensitive searches
+
+---
+
+#### trim()
+
+```javascript
+let text = "   Hello World   ";
+
+console.log(text.trim()); // Output: "Hello World"
+console.log(text.length); // 19
+console.log(text.trim().length); // 11
+
+// Trim from start only
+console.log(text.trimStart()); // Output: "Hello World   "
+console.log(text.trimLeft()); // Same as trimStart()
+
+// Trim from end only
+console.log(text.trimEnd()); // Output: "   Hello World"
+console.log(text.trimRight()); // Same as trimEnd()
+
+// Remove all whitespace
+let whitespace = "  H e l l o  ";
+console.log(whitespace.trim()); // "H e l l o"
+```
+
+**Practical Example**:
+
+```javascript
+// Form input validation
+function processUserInput(input) {
+  let clean = input.trim();
+  if (clean.length === 0) {
+    return "Error: Empty input";
+  }
+  return clean;
+}
+
+console.log(processUserInput("   John   ")); // "John"
+console.log(processUserInput("   ")); // "Error: Empty input"
 ```
 
 ---
 
-### String Search Methods
+### 2. String Search Methods
+
+#### indexOf()
 
 ```javascript
 let text = "Hello World";
 
 console.log(text.indexOf("o")); // Output: 4
-console.log(text.lastIndexOf("o")); // Output: 7
+console.log(text.indexOf("World")); // Output: 6
+console.log(text.indexOf("x")); // Output: -1 (not found)
+
+// Search from specific position
+console.log(text.indexOf("o", 5)); // Output: 7
+
+// Case-sensitive
+console.log(text.indexOf("hello")); // Output: -1
+console.log(text.indexOf("Hello")); // Output: 0
+
+// Find all occurrences
+let str = "apple apple apple";
+let index = 0;
+let count = 0;
+while ((index = str.indexOf("apple", index)) !== -1) {
+  count++;
+  index += 5; // Move past this match
+}
+console.log(count); // Output: 3
+```
+
+---
+
+#### lastIndexOf()
+
+```javascript
+let text = "Hello World";
+
+console.log(text.lastIndexOf("o")); // Output: 7 (last 'o')
+console.log(text.lastIndexOf("Hello")); // Output: 0
+console.log(text.lastIndexOf("x")); // Output: -1
+
+// Last occurrence before position
+console.log(text.lastIndexOf("o", 6)); // Output: 4
+
+// Get last word
+let sentence = "The quick brown fox";
+let lastSpace = sentence.lastIndexOf(" ");
+console.log(sentence.substring(lastSpace + 1)); // Output: fox
+```
+
+---
+
+#### includes()
+
+```javascript
+let text = "Hello World";
+
 console.log(text.includes("World")); // Output: true
+console.log(text.includes("world")); // Output: false (case-sensitive)
+console.log(text.includes("o W")); // Output: true
+
+// Search from position
+console.log(text.includes("World", 6)); // Output: true
+console.log(text.includes("World", 7)); // Output: false
+
+// Check multiple conditions
+let email = "john@example.com";
+console.log(email.includes("@") && email.includes(".")); // true (valid format)
+
+// Array-like check
+let message = "Welcome to JavaScript";
+let keywords = ["JavaScript", "Python", "Java"];
+let found = keywords.some((keyword) => message.includes(keyword));
+console.log(found); // Output: true
+```
+
+---
+
+#### startsWith()
+
+```javascript
+let text = "Hello World";
+
 console.log(text.startsWith("Hello")); // Output: true
+console.log(text.startsWith("hello")); // Output: false (case-sensitive)
+console.log(text.startsWith("World")); // Output: false
+
+// Start position
+console.log(text.startsWith("World", 6)); // Output: true
+
+// URL validation
+let url = "https://example.com";
+console.log(url.startsWith("https://")); // Output: true
+
+// Protocol check
+function isSecureUrl(url) {
+  return url.startsWith("https://");
+}
+
+console.log(isSecureUrl("https://bank.com")); // true
+console.log(isSecureUrl("http://bank.com")); // false
+```
+
+---
+
+#### endsWith()
+
+```javascript
+let text = "Hello World";
+
 console.log(text.endsWith("World")); // Output: true
+console.log(text.endsWith("world")); // Output: false (case-sensitive)
+console.log(text.endsWith("Hello")); // Output: false
+
+// Check length
+console.log(text.endsWith("World", 11)); // Output: true (check first 11 chars)
+
+// File type validation
+function isImageFile(filename) {
+  const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+  return imageExtensions.some((ext) => filename.toLowerCase().endsWith(ext));
+}
+
+console.log(isImageFile("photo.jpg")); // true
+console.log(isImageFile("document.pdf")); // false
 ```
 
 ---
 
-### String Extraction Methods
+### 3. String Extraction Methods
+
+#### slice()
 
 ```javascript
 let text = "Hello World";
 
+// Extract substring (start to end)
 console.log(text.slice(0, 5)); // Output: Hello
-console.log(text.substring(6)); // Output: World
-console.log(text.substr(0, 5)); // Output: Hello (deprecated)
+console.log(text.slice(6)); // Output: World
 
-// Character at index
-console.log(text.charAt(0)); // Output: H
-console.log(text.charCodeAt(0)); // Output: 72
+// Negative indices (from end)
+console.log(text.slice(-5)); // Output: World (last 5 chars)
+console.log(text.slice(0, -6)); // Output: Hello
+
+// Swap first and last word
+let sentence = "Hello World";
+let firstSpace = sentence.indexOf(" ");
+let lastWord = sentence.slice(firstSpace + 1);
+let firstWord = sentence.slice(0, firstSpace);
+console.log(`${lastWord} ${firstWord}`); // Output: World Hello
 ```
+
+**Use Cases**:
+
+- Extract substrings
+- Remove trailing characters
+- Parse strings
 
 ---
 
-### String Replacement & Splitting
+#### substring()
 
 ```javascript
 let text = "Hello World";
 
-console.log(text.replace("World", "JavaScript"));
-// Output: Hello JavaScript
+console.log(text.substring(0, 5)); // Output: Hello
+console.log(text.substring(6)); // Output: World
 
-console.log(text.replaceAll("l", "L"));
-// Output: HeLLo worLd
+// Negative numbers treated as 0
+console.log(text.substring(-5)); // Output: Hello World (same as substring(0))
 
-let words = text.split(" ");
-console.log(words); // Output: ["Hello", "World"]
+// Arguments reversed if first > second
+console.log(text.substring(5, 0)); // Output: Hello (same as substring(0, 5))
 
-console.log(text.repeat(2));
-// Output: Hello WorldHello World
+// Difference from slice
+console.log("Hello".slice(-3)); // Output: llo
+console.log("Hello".substring(-3)); // Output: Hello (treats -3 as 0)
+```
+
+**slice() vs substring()**:
+
+- `slice()` accepts negative indices
+- `substring()` treats negatives as 0
+- `slice()` is generally preferred
+
+---
+
+#### charAt()
+
+```javascript
+let text = "Hello World";
+
+console.log(text.charAt(0)); // Output: H
+console.log(text.charAt(6)); // Output: W
+console.log(text.charAt(100)); // Output: "" (empty string)
+
+// First character
+console.log(text.charAt(0).toUpperCase() + text.slice(1)); // "Hello World"
+
+// Capitalize each word
+function capitalizeWords(text) {
+  return text
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
+console.log(capitalizeWords("hello world javascript"));
+// Output: Hello World Javascript
 ```
 
 ---
 
-### String Padding & Trimming
+#### charCodeAt()
 
 ```javascript
-let text = "   Hello World   ";
+let text = "Hello";
 
-console.log(text.trim()); // Output: Hello World
-console.log(text.trimStart()); // Output: Hello World
-console.log(text.trimEnd()); // Output:    Hello World
+console.log(text.charCodeAt(0)); // Output: 72 (H)
+console.log(text.charCodeAt(1)); // Output: 101 (e)
 
+// Check if uppercase
+function isUpperCase(char) {
+  return char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= 90;
+}
+
+console.log(isUpperCase("A")); // true
+console.log(isUpperCase("a")); // false
+
+// Convert character code to character
+console.log(String.fromCharCode(72, 101, 108, 108, 111)); // "Hello"
+
+// Reverse encode
+let str = "Hello";
+let codes = [];
+for (let i = 0; i < str.length; i++) {
+  codes.push(str.charCodeAt(i));
+}
+console.log(codes); // [72, 101, 108, 108, 111]
+```
+
+---
+
+### 4. String Replacement & Splitting Methods
+
+#### split()
+
+```javascript
+let text = "Hello World";
+
+// Split by space
+console.log(text.split(" ")); // Output: ["Hello", "World"]
+
+// Split into characters
+console.log(text.split("")); // Output: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"]
+
+// Split with limit
+console.log(text.split(" ", 1)); // Output: ["Hello"]
+
+// Split by regex
+console.log("a1b2c3".split(/\d/)); // Output: ["a", "b", "c", ""]
+
+// CSV parsing
+let csv = "John,30,john@example.com";
+let [name, age, email] = csv.split(",");
+console.log(name, age, email); // John 30 john@example.com
+
+// Multiple delimiters
+let text2 = "apple; orange, banana";
+let fruits = text2.split(/[;,]/); // Split by ; or ,
+console.log(fruits); // ["apple", " orange", " banana"]
+```
+
+---
+
+#### replace()
+
+```javascript
+let text = "Hello World World";
+
+// Replace first occurrence
+console.log(text.replace("World", "JavaScript"));
+// Output: Hello JavaScript World
+
+// Replace all (use regex with global flag)
+console.log(text.replace(/World/g, "JavaScript"));
+// Output: Hello JavaScript JavaScript
+
+// Case-insensitive replace
+console.log(text.replace(/world/i, "JavaScript"));
+// Output: Hello JavaScript World
+
+// Replace with function
+let result = text.replace(/\w+/g, (word) => word.toUpperCase());
+console.log(result); // HELLO WORLD WORLD
+
+// Template replacement
+function replaceTemplate(template, data) {
+  return template.replace(/{(\w+)}/g, (match, key) => data[key] || match);
+}
+
+let template = "Hello {name}, you are {age} years old";
+let data = { name: "John", age: 30 };
+console.log(replaceTemplate(template, data));
+// Output: Hello John, you are 30 years old
+```
+
+---
+
+#### repeat()
+
+```javascript
+let text = "Hello";
+
+console.log(text.repeat(2)); // Output: HelloHello
+console.log(text.repeat(3)); // Output: HelloHelloHello
+console.log("*".repeat(10)); // Output: **********
+
+// Create pattern
+console.log("=".repeat(20)); // Output: ====================
+
+// Padding alternative
 let num = "5";
-console.log(num.padStart(3, "0")); // Output: 005
-console.log(num.padEnd(3, "0")); // Output: 500
+console.log(num.repeat(3)); // Output: 555
+
+// Generate repetitive content
+let dashes = "-".repeat(50);
+console.log(`${dashes}`); // Long line of dashes
+```
+
+---
+
+### 5. String Padding Methods
+
+#### padStart()
+
+```javascript
+let text = "5";
+
+console.log(text.padStart(3, "0")); // Output: 005
+console.log(text.padStart(5, "*")); // Output: ****5
+
+// Numeric formatting
+let price = "19.99";
+console.log("$" + price.padStart(8, " ")); // Output: $   19.99
+
+// Create column alignment
+let numbers = [5, 50, 500];
+numbers.forEach((num) => {
+  console.log(String(num).padStart(4, " "));
+});
+// Output:
+//    5
+//   50
+//  500
+
+// Credit card masking
+function maskCardNumber(card) {
+  let last4 = card.slice(-4);
+  return "*".repeat(12) + last4;
+}
+
+console.log(maskCardNumber("1234567890123456")); // Output: ****0123456
+```
+
+---
+
+#### padEnd()
+
+```javascript
+let text = "5";
+
+console.log(text.padEnd(3, "0")); // Output: 500
+console.log(text.padEnd(5, "*")); // Output: 5****
+
+// Create fixed-width columns
+let data = ["Name", "Age", "City"];
+data.forEach((item) => {
+  console.log(item.padEnd(15, ".") + " |");
+});
+// Output:
+// Name........... |
+// Age............ |
+// City........... |
+
+// Message formatting
+function formatMessage(msg, width = 20) {
+  return msg.padEnd(width, " ") + "|";
+}
+
+console.log(formatMessage("Hello")); // "Hello               |"
+console.log(formatMessage("JavaScript", 15)); // "JavaScript     |"
+```
+
+---
+
+### 6. Advanced String Examples
+
+#### String Template Processing
+
+```javascript
+// Template with replacements
+let template = "Welcome {user}, you have {count} messages";
+
+function interpolate(template, values) {
+  return template.replace(/{(\w+)}/g, (match, key) => {
+    return values[key] !== undefined ? values[key] : match;
+  });
+}
+
+let result = interpolate(template, { user: "John", count: 5 });
+console.log(result); // "Welcome John, you have 5 messages"
+```
+
+---
+
+#### Email Validation with String Methods
+
+```javascript
+function validateEmail(email) {
+  // Convert to lowercase for consistency
+  email = email.toLowerCase().trim();
+
+  // Check basic format
+  if (!email.includes("@")) return false;
+  if (!email.includes(".")) return false;
+
+  let [local, domain] = email.split("@");
+
+  // Validate parts
+  if (local.length === 0 || domain.length === 0) return false;
+  if (!domain.includes(".")) return false;
+
+  let [name, tld] = domain.split(".");
+  if (name.length === 0 || tld.length < 2) return false;
+
+  return true;
+}
+
+console.log(validateEmail("john@example.com")); // true
+console.log(validateEmail("   invalid.email   ")); // false
+console.log(validateEmail("no-at-sign.com")); // false
 ```
 
 ---
@@ -2005,119 +2465,615 @@ console.log(num.padEnd(3, "0")); // Output: 500
 
 Arrays have powerful methods for manipulation, filtering, and transformation.
 
-### Array Modification Methods
+### 1. Array Modification Methods (Mutating)
+
+#### push()
 
 ```javascript
-let arr = [1, 2, 3, 4, 5];
+let arr = [1, 2, 3];
 
-// Add elements
-arr.push(6); // Add to end: [1, 2, 3, 4, 5, 6]
-arr.unshift(0); // Add to start: [0, 1, 2, 3, 4, 5, 6]
+// Add single element
+arr.push(4);
+console.log(arr); // Output: [1, 2, 3, 4]
 
-// Remove elements
-arr.pop(); // Remove from end: [0, 1, 2, 3, 4, 5]
-arr.shift(); // Remove from start: [1, 2, 3, 4, 5]
+// Add multiple elements
+arr.push(5, 6, 7);
+console.log(arr); // Output: [1, 2, 3, 4, 5, 6, 7]
 
-// Splice (modify array)
-arr.splice(2, 1); // Remove 1 element at index 2: [1, 2, 4, 5]
-arr.splice(2, 0, 3); // Insert element: [1, 2, 3, 4, 5]
+// Returns new length
+let newLength = arr.push(8);
+console.log(newLength); // Output: 8
+
+// Practical example - building a list
+let items = [];
+items.push("apple");
+items.push("banana");
+items.push("orange");
+console.log(items); // ["apple", "banana", "orange"]
 ```
 
 ---
 
-### Array Search Methods
+#### pop()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Remove last element
+let removed = arr.pop();
+console.log(removed); // Output: 5
+console.log(arr); // Output: [1, 2, 3, 4]
+
+// Pop empty array returns undefined
+let empty = [];
+console.log(empty.pop()); // Output: undefined
+
+// Implement stack using array
+class Stack {
+  constructor() {
+    this.items = [];
+  }
+  push(x) {
+    this.items.push(x);
+  }
+  pop() {
+    return this.items.pop();
+  }
+}
+
+let stack = new Stack();
+stack.push(1);
+stack.push(2);
+console.log(stack.pop()); // 2
+```
+
+---
+
+#### unshift()
+
+```javascript
+let arr = [2, 3, 4];
+
+// Add element at start
+arr.unshift(1);
+console.log(arr); // Output: [1, 2, 3, 4]
+
+// Add multiple elements
+arr.unshift(-2, -1);
+console.log(arr); // Output: [-2, -1, 1, 2, 3, 4]
+
+// Returns new length
+let newLength = arr.unshift(0);
+console.log(newLength); // Output: 7
+
+// Prepend to history
+let history = ["action2"];
+history.unshift("action1");
+console.log(history); // ["action1", "action2"]
+```
+
+---
+
+#### shift()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Remove first element
+let removed = arr.shift();
+console.log(removed); // Output: 1
+console.log(arr); // Output: [2, 3, 4, 5]
+
+// Process queue
+let queue = ["task1", "task2", "task3"];
+while (queue.length > 0) {
+  let task = queue.shift();
+  console.log("Processing:", task);
+}
+// Output: Processing: task1, Processing: task2, Processing: task3
+```
+
+---
+
+#### splice()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Remove elements (delete 2 elements starting at index 2)
+let removed = arr.splice(2, 2);
+console.log(removed); // Output: [3, 4]
+console.log(arr); // Output: [1, 2, 5]
+
+// Insert elements (insert at index 2, remove 0 elements)
+let arr2 = [1, 2, 5];
+arr2.splice(2, 0, 3, 4);
+console.log(arr2); // Output: [1, 2, 3, 4, 5]
+
+// Replace elements
+let arr3 = [1, 2, 3, 4, 5];
+arr3.splice(1, 2, 20, 30); // Replace indices 1,2 with 20,30
+console.log(arr3); // Output: [1, 20, 30, 4, 5]
+
+// Remove all elements from index 2 onwards
+let arr4 = [1, 2, 3, 4, 5];
+arr4.splice(2);
+console.log(arr4); // Output: [1, 2]
+```
+
+---
+
+### 2. Array Transformation Methods (Non-Mutating)
+
+#### map()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Transform each element
+let doubled = arr.map((x) => x * 2);
+console.log(doubled); // Output: [2, 4, 6, 8, 10]
+
+// Extract property from objects
+let users = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Bob", age: 35 },
+];
+
+let names = users.map((user) => user.name);
+console.log(names); // Output: ["John", "Jane", "Bob"]
+
+// Convert to strings
+let numbers = [1, 2, 3];
+let strings = numbers.map((n) => String(n));
+console.log(strings); // Output: ["1", "2", "3"]
+
+// With index and array parameters
+let arr2 = [10, 20, 30];
+let indexed = arr2.map((value, index) => `${index}: ${value}`);
+console.log(indexed);
+// Output: ["0: 10", "1: 20", "2: 30"]
+```
+
+---
+
+#### filter()
+
+```javascript
+let arr = [1, 2, 3, 4, 5, 6];
+
+// Keep even numbers
+let evens = arr.filter((x) => x % 2 === 0);
+console.log(evens); // Output: [2, 4, 6]
+
+// Keep numbers greater than 3
+let greater = arr.filter((x) => x > 3);
+console.log(greater); // Output: [4, 5, 6]
+
+// Filter objects
+let users = [
+  { name: "John", age: 30, active: true },
+  { name: "Jane", age: 25, active: false },
+  { name: "Bob", age: 35, active: true },
+];
+
+let activeUsers = users.filter((user) => user.active);
+console.log(activeUsers);
+// Output: [{ name: "John", age: 30, active: true }, { name: "Bob", age: 35, active: true }]
+
+// Remove duplicates
+let arr2 = [1, 2, 2, 3, 3, 3, 4];
+let unique = arr2.filter(
+  (value, index, array) => array.indexOf(value) === index,
+);
+console.log(unique); // Output: [1, 2, 3, 4]
+```
+
+---
+
+#### reduce()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Sum all elements
+let sum = arr.reduce((acc, x) => acc + x, 0);
+console.log(sum); // Output: 15
+
+// Product of all elements
+let product = arr.reduce((acc, x) => acc * x, 1);
+console.log(product); // Output: 120
+
+// Count occurrences
+let items = ["apple", "banana", "apple", "orange", "banana", "apple"];
+let count = items.reduce((acc, item) => {
+  acc[item] = (acc[item] || 0) + 1;
+  return acc;
+}, {});
+console.log(count);
+// Output: { apple: 3, banana: 2, orange: 1 }
+
+// Flatten nested array
+let nested = [
+  [1, 2],
+  [3, 4],
+  [5, 6],
+];
+let flattened = nested.reduce((acc, arr) => acc.concat(arr), []);
+console.log(flattened); // Output: [1, 2, 3, 4, 5, 6]
+
+// Transform array of objects to object
+let records = [
+  { id: 1, name: "John" },
+  { id: 2, name: "Jane" },
+];
+let keyed = records.reduce((acc, record) => {
+  acc[record.id] = record.name;
+  return acc;
+}, {});
+console.log(keyed); // { 1: "John", 2: "Jane" }
+```
+
+---
+
+#### forEach()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Simple iteration
+arr.forEach((x) => console.log(x));
+// Output: 1, 2, 3, 4, 5
+
+// With index and array
+arr.forEach((value, index, array) => {
+  console.log(`${index}: ${value}`);
+});
+// Output: 0: 1, 1: 2, 2: 3, 3: 4, 4: 5
+
+// Iterate objects in array
+let users = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+];
+
+users.forEach((user) => {
+  console.log(`${user.name} is ${user.age} years old`);
+});
+// Output: John is 30 years old, Jane is 25 years old
+
+// Note: forEach doesn't return anything
+let result = [1, 2, 3].forEach((x) => x * 2);
+console.log(result); // Output: undefined
+```
+
+---
+
+#### find()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Find first element greater than 3
+let found = arr.find((x) => x > 3);
+console.log(found); // Output: 4
+
+// Find in objects
+let users = [
+  { id: 1, name: "John" },
+  { id: 2, name: "Jane" },
+  { id: 3, name: "Bob" },
+];
+
+let user = users.find((u) => u.id === 2);
+console.log(user); // Output: { id: 2, name: "Jane" }
+
+// Find returns undefined if not found
+let notFound = arr.find((x) => x > 100);
+console.log(notFound); // Output: undefined
+
+// Use with condition
+function findUser(users, predicate) {
+  return users.find(predicate);
+}
+
+let activeUser = findUser(users, (u) => u.name === "Bob");
+console.log(activeUser); // { id: 3, name: "Bob" }
+```
+
+---
+
+### 3. Array Search & Index Methods
+
+#### indexOf()
 
 ```javascript
 let arr = [1, 2, 3, 4, 5, 3];
 
+// Find index
 console.log(arr.indexOf(3)); // Output: 2
-console.log(arr.lastIndexOf(3)); // Output: 5
-console.log(arr.includes(4)); // Output: true
+console.log(arr.indexOf(5)); // Output: 4
+console.log(arr.indexOf(10)); // Output: -1
 
-// Find first matching element
-console.log(arr.find((x) => x > 3)); // Output: 4
+// Find from position
+console.log(arr.indexOf(3, 3)); // Output: 5
 
-// Find index of first matching element
-console.log(arr.findIndex((x) => x > 3)); // Output: 3
+// Find string in array
+let fruits = ["apple", "banana", "orange"];
+console.log(fruits.indexOf("banana")); // Output: 1
+
+// Check if exists
+if (fruits.indexOf("apple") !== -1) {
+  console.log("Apple found!");
+}
 ```
 
 ---
 
-### Array Transformation Methods
+#### includes()
 
 ```javascript
 let arr = [1, 2, 3, 4, 5];
 
-// Map - transform each element
-let doubled = arr.map((x) => x * 2);
-console.log(doubled); // Output: [2, 4, 6, 8, 10]
+console.log(arr.includes(3)); // Output: true
+console.log(arr.includes(10)); // Output: false
 
-// Filter - keep matching elements
-let evens = arr.filter((x) => x % 2 === 0);
-console.log(evens); // Output: [2, 4]
+// From position
+console.log(arr.includes(3, 4)); // Output: false (search from index 4)
 
-// Reduce - accumulate into single value
-let sum = arr.reduce((acc, x) => acc + x, 0);
-console.log(sum); // Output: 15
+// Check multiple
+let arr2 = ["red", "green", "blue"];
+console.log(arr2.includes("red")); // true
+console.log(arr2.includes("yellow")); // false
+
+// More readable than indexOf
+// ✅ Prefer: arr.includes(5)
+// ❌ Avoid: arr.indexOf(5) !== -1
 ```
 
 ---
 
-### Array Sorting & Reversing
+### 4. Array Sorting & Reversing Methods
+
+#### sort()
 
 ```javascript
 let arr = [3, 1, 4, 1, 5, 9];
 
-// Reverse (modifies original)
+// Default sort (alphabetical - problematic for numbers)
+let sorted = arr.sort();
+console.log(sorted); // Output: [1, 1, 3, 4, 5, 9]
+
+// Numeric sort (ascending)
+let numbers = [30, 5, 20, 100];
+numbers.sort((a, b) => a - b);
+console.log(numbers); // Output: [5, 20, 30, 100]
+
+// Numeric sort (descending)
+numbers.sort((a, b) => b - a);
+console.log(numbers); // Output: [100, 30, 20, 5]
+
+// Sort strings
+let words = ["banana", "apple", "cherry"];
+words.sort();
+console.log(words); // Output: ["apple", "banana", "cherry"]
+
+// Sort objects
+let users = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Bob", age: 35 },
+];
+
+users.sort((a, b) => a.age - b.age);
+console.log(users);
+// Output sorted by age: [{ name: "Jane", age: 25 }, { name: "John", age: 30 }, { name: "Bob", age: 35 }]
+
+// Case-insensitive sort
+let names = ["Bob", "alice", "Charlie"];
+names.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+console.log(names); // ["alice", "Bob", "Charlie"]
+```
+
+---
+
+#### reverse()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
 arr.reverse();
-console.log(arr); // Output: [9, 5, 1, 4, 1, 3]
+console.log(arr); // Output: [5, 4, 3, 2, 1]
 
-// Sort (modifies original, alphabetical by default)
-let nums = [3, 1, 4, 1, 5];
-nums.sort((a, b) => a - b); // Numeric sort
-console.log(nums); // Output: [1, 1, 3, 4, 5]
+// String reversal
+let str = "hello";
+let reversed = str.split("").reverse().join("");
+console.log(reversed); // Output: olleh
 
-// Sort descending
-nums.sort((a, b) => b - a);
-console.log(nums); // Output: [5, 4, 3, 1, 1]
+// Check palindrome
+function isPalindrome(str) {
+  let clean = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+  let reversed = clean.split("").reverse().join("");
+  return clean === reversed;
+}
+
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+console.log(isPalindrome("hello")); // false
 ```
 
 ---
 
-### Array Joining & Flattening
+### 5. Array Combining & Flattening Methods
+
+#### concat()
+
+```javascript
+let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+
+// Combine arrays
+let combined = arr1.concat(arr2);
+console.log(combined); // Output: [1, 2, 3, 4, 5, 6]
+
+// Original arrays unchanged
+console.log(arr1); // [1, 2, 3]
+
+// Combine multiple arrays
+let arr3 = [7, 8, 9];
+let result = arr1.concat(arr2, arr3);
+console.log(result); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// Add single values
+let merged = arr1.concat(99, 100);
+console.log(merged); // [1, 2, 3, 99, 100]
+
+// Using spread operator (modern alternative)
+let combined2 = [...arr1, ...arr2];
+console.log(combined2); // [1, 2, 3, 4, 5, 6]
+```
+
+---
+
+#### join()
 
 ```javascript
 let arr = [1, 2, 3, 4, 5];
 
-// Join elements into string
-console.log(arr.join(", ")); // Output: 1, 2, 3, 4, 5
+// Default comma separator
+console.log(arr.join()); // Output: 1,2,3,4,5
+
+// Custom separator
 console.log(arr.join("-")); // Output: 1-2-3-4-5
+console.log(arr.join(", ")); // Output: 1, 2, 3, 4, 5
 
-// Flatten nested arrays
-let nested = [1, [2, 3], [4, [5, 6]]];
-console.log(nested.flat()); // Output: [1, 2, 3, 4, [5, 6]]
-console.log(nested.flat(2)); // Output: [1, 2, 3, 4, 5, 6]
+// Create file paths
+let path = ["home", "user", "documents", "file.txt"];
+console.log(path.join("/")); // Output: home/user/documents/file.txt
 
-// FlatMap - map then flatten
-let arr2 = [1, 2, 3];
-let result = arr2.flatMap((x) => [x, x * 2]);
-console.log(result); // Output: [1, 2, 2, 4, 3, 6]
+// Generate CSV
+let data = [
+  ["Name", "Age", "City"],
+  ["John", "30", "NYC"],
+  ["Jane", "25", "LA"],
+];
+
+let csv = data.map((row) => row.join(",")).join("\n");
+console.log(csv);
+// Output:
+// Name,Age,City
+// John,30,NYC
+// Jane,25,LA
 ```
 
 ---
 
-### Array Checking Methods
+#### slice()
 
 ```javascript
 let arr = [1, 2, 3, 4, 5];
 
-// Check if all elements match condition
+// Extract portion
+console.log(arr.slice(0, 3)); // Output: [1, 2, 3]
+console.log(arr.slice(2)); // Output: [3, 4, 5]
+
+// Negative indices
+console.log(arr.slice(-2)); // Output: [4, 5]
+console.log(arr.slice(0, -1)); // Output: [1, 2, 3, 4]
+
+// Copy array
+let copy = arr.slice();
+copy[0] = 99;
+console.log(arr); // [1, 2, 3, 4, 5] (original unchanged)
+console.log(copy); // [99, 2, 3, 4, 5]
+
+// Get last n elements
+function getLastN(arr, n) {
+  return arr.slice(-n);
+}
+
+console.log(getLastN([1, 2, 3, 4, 5], 2)); // [4, 5]
+```
+
+---
+
+#### flat()
+
+```javascript
+// Simple flatten
+let nested1 = [1, [2, 3], [4, [5, 6]]];
+console.log(nested1.flat()); // Output: [1, 2, 3, 4, [5, 6]]
+
+// Flatten deeply (depth 2)
+console.log(nested1.flat(2)); // Output: [1, 2, 3, 4, 5, 6]
+
+// Flatten all levels
+console.log(nested1.flat(Infinity)); // Output: [1, 2, 3, 4, 5, 6]
+
+// Remove holes in array
+let sparse = [1, , 3, , 5];
+console.log(sparse.flat()); // Output: [1, 3, 5]
+
+// Flatten and map
+let arr = [1, 2, 3];
+let flatMapped = arr.flatMap((x) => [x, x * 2]);
+console.log(flatMapped); // Output: [1, 2, 2, 4, 3, 6]
+```
+
+---
+
+### 6. Array Checking Methods
+
+#### every()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Check all positive
 console.log(arr.every((x) => x > 0)); // Output: true
+
+// Check all greater than 3
 console.log(arr.every((x) => x > 3)); // Output: false
 
-// Check if some elements match condition
+// Check array properties
+let numbers = [2, 4, 6, 8];
+console.log(numbers.every((x) => x % 2 === 0)); // true (all even)
+
+// Validate object properties
+let users = [
+  { name: "John", active: true },
+  { name: "Jane", active: true },
+  { name: "Bob", active: false },
+];
+
+console.log(users.every((u) => u.active)); // false
+```
+
+---
+
+#### some()
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Check if any greater than 3
 console.log(arr.some((x) => x > 3)); // Output: true
-console.log(arr.some((x) => x > 10)); // Output: false
+
+// Check if any is negative
+console.log(arr.some((x) => x < 0)); // Output: false
+
+// Find if specific item exists
+let fruits = ["apple", "banana", "orange"];
+console.log(fruits.some((f) => f === "banana")); // true
+
+// Validate user permissions
+let users = [
+  { name: "John", isAdmin: false },
+  { name: "Jane", isAdmin: true },
+  { name: "Bob", isAdmin: false },
+];
+
+console.log(users.some((u) => u.isAdmin)); // true (at least one admin)
 ```
 
 ---
@@ -2126,120 +3082,575 @@ console.log(arr.some((x) => x > 10)); // Output: false
 
 Objects are fundamental to JavaScript. Learn how to work with them effectively.
 
-### Object Creation
+### 1. Object Creation Methods
+
+#### Object Literal
 
 ```javascript
-// Object literal
+// Basic object
 let person = {
   name: "John",
   age: 30,
   email: "john@example.com",
 };
 
-// Constructor function
-function Person(name, age) {
-  this.name = name;
-  this.age = age;
-}
+console.log(person); // { name: 'John', age: 30, email: 'john@example.com' }
 
-let person2 = new Person("Jane", 25);
-
-// Object.create()
-let proto = {
-  greet: function () {
-    return "Hello";
+// Nested object
+let user = {
+  name: "Alice",
+  address: {
+    street: "123 Main St",
+    city: "NYC",
+    zip: "10001",
   },
+  skills: ["JavaScript", "Python", "React"],
 };
-let obj = Object.create(proto);
-obj.name = "Bob";
+
+console.log(user.address.city); // NYC
 ```
 
 ---
 
-### Object Properties
+#### Constructor Function
+
+```javascript
+// Constructor function
+function Person(name, age, email) {
+  this.name = name;
+  this.age = age;
+  this.email = email;
+  this.greet = function () {
+    return `Hello, I'm ${this.name}`;
+  };
+}
+
+let person1 = new Person("John", 30, "john@example.com");
+let person2 = new Person("Jane", 25, "jane@example.com");
+
+console.log(person1.greet()); // "Hello, I'm John"
+console.log(person2.greet()); // "Hello, I'm Jane"
+```
+
+---
+
+#### Object.create()
+
+```javascript
+// Create object with prototype
+let proto = {
+  greet: function () {
+    return `Hello, ${this.name}`;
+  },
+};
+
+let person = Object.create(proto);
+person.name = "Bob";
+console.log(person.greet()); // "Hello, Bob"
+
+// Create object with null prototype
+let noProto = Object.create(null);
+noProto.x = 5;
+console.log(noProto.toString); // undefined (no inherited methods)
+```
+
+---
+
+#### Factory Function
+
+```javascript
+// Factory function (returns object)
+function createPerson(name, age) {
+  return {
+    name,
+    age,
+    greet() {
+      return `Hi, I'm ${this.name}`;
+    },
+  };
+}
+
+let person1 = createPerson("John", 30);
+let person2 = createPerson("Jane", 25);
+
+console.log(person1.greet()); // "Hi, I'm John"
+```
+
+---
+
+### 2. Object Properties & Access
+
+#### Dot Notation vs Bracket Notation
 
 ```javascript
 let person = {
   name: "John",
   age: 30,
+  "email-address": "john@example.com",
 };
 
-// Add property
-person.email = "john@example.com";
-person["phone"] = "123-456-7890";
-
-// Access property
+// Dot notation
 console.log(person.name); // John
-console.log(person["age"]); // 30
+console.log(person.age); // 30
 
-// Delete property
-delete person.phone;
+// Bracket notation (required for special names)
+console.log(person["email-address"]); // john@example.com
 
-// Check property existence
-console.log("name" in person); // true
-console.log(person.hasOwnProperty("email")); // true
+// Dynamic property access
+let prop = "name";
+console.log(person[prop]); // John
+
+// Add properties dynamically
+person["phone"] = "123-456-7890";
+person.address = "123 Main St";
 ```
 
 ---
 
-### Object Methods
+#### hasOwnProperty()
+
+```javascript
+let person = { name: "John", age: 30 };
+
+// Check if property exists
+console.log(person.hasOwnProperty("name")); // true
+console.log(person.hasOwnProperty("email")); // false
+
+// Check inherited properties
+let proto = { inherited: true };
+let obj = Object.create(proto);
+obj.own = true;
+
+console.log(obj.hasOwnProperty("own")); // true
+console.log(obj.hasOwnProperty("inherited")); // false (inherited, not own)
+
+// Get only own properties
+let person2 = { name: "Alice", age: 25 };
+for (let key in person2) {
+  if (person2.hasOwnProperty(key)) {
+    console.log(`${key}: ${person2[key]}`);
+  }
+}
+```
+
+---
+
+#### in Operator
+
+```javascript
+let person = { name: "John", age: 30 };
+let proto = { inherited: true };
+let obj = Object.create(proto);
+obj.own = true;
+
+// Check own and inherited properties
+console.log("own" in obj); // true
+console.log("inherited" in obj); // true (checks prototype chain)
+console.log("nonexistent" in obj); // false
+
+// Difference from hasOwnProperty
+console.log(obj.hasOwnProperty("own")); // true
+console.log(obj.hasOwnProperty("inherited")); // false
+console.log("inherited" in obj); // true
+```
+
+---
+
+#### Delete Property
 
 ```javascript
 let person = { name: "John", age: 30, email: "john@example.com" };
 
-// Get all keys
-console.log(Object.keys(person));
-// Output: ["name", "age", "email"]
+// Delete property
+delete person.email;
+console.log(person); // { name: 'John', age: 30 }
 
-// Get all values
-console.log(Object.values(person));
-// Output: ["John", 30, "john@example.com"]
+// Delete returns true if successful
+console.log(delete person.name); // true
+console.log(person.name); // undefined
 
-// Get key-value pairs
-console.log(Object.entries(person));
-// Output: [["name", "John"], ["age", 30], ["email", "john@example.com"]]
-
-// Copy object
-let copy = Object.assign({}, person);
-let copy2 = { ...person }; // Spread syntax
-
-// Freeze object (prevent modifications)
-Object.freeze(person);
-// person.age = 31; // Throws error in strict mode
-
-// Seal object (allow modifications, no add/delete)
-Object.seal(person);
+// Cannot delete properties from frozen objects
+let frozen = { x: 1 };
+Object.freeze(frozen);
+console.log(delete frozen.x); // false (in strict mode: error)
 ```
 
 ---
 
-### Object Destructuring
+### 3. Object.keys() - Get All Keys
 
 ```javascript
-// Extract properties into variables
+let person = { name: "John", age: 30, email: "john@example.com" };
+
+// Get all property keys
+let keys = Object.keys(person);
+console.log(keys); // Output: ["name", "age", "email"]
+
+// Iterate over keys
+Object.keys(person).forEach((key) => {
+  console.log(`${key}: ${person[key]}`);
+});
+// Output:
+// name: John
+// age: 30
+// email: john@example.com
+
+// Count properties
+console.log(Object.keys(person).length); // 3
+
+// Check if object is empty
+let empty = {};
+console.log(Object.keys(empty).length === 0); // true
+
+// Only own properties (not inherited)
+let obj = { own: 1 };
+Object.setPrototypeOf(obj, { inherited: 2 });
+console.log(Object.keys(obj)); // ["own"]
+```
+
+---
+
+### 4. Object.values() - Get All Values
+
+```javascript
+let person = { name: "John", age: 30, email: "john@example.com" };
+
+// Get all property values
+let values = Object.values(person);
+console.log(values); // Output: ["John", 30, "john@example.com"]
+
+// Sum all numeric values
+let scores = { math: 85, english: 92, science: 88 };
+let total = Object.values(scores).reduce((a, b) => a + b, 0);
+console.log(total); // 265
+
+// Get average
+let average = total / Object.values(scores).length;
+console.log(average); // 88.33
+
+// Type checking
+let data = { name: "John", age: 30, active: true };
+let hasStrings = Object.values(data).some((v) => typeof v === "string");
+console.log(hasStrings); // true
+```
+
+---
+
+### 5. Object.entries() - Get Key-Value Pairs
+
+```javascript
+let person = { name: "John", age: 30, email: "john@example.com" };
+
+// Get all key-value pairs
+let entries = Object.entries(person);
+console.log(entries);
+// Output: [["name", "John"], ["age", 30], ["email", "john@example.com"]]
+
+// Iterate over entries
+Object.entries(person).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`);
+});
+// Output:
+// name: John
+// age: 30
+// email: john@example.com
+
+// Convert to Map
+let personMap = new Map(Object.entries(person));
+console.log(personMap.get("name")); // "John"
+
+// Convert to query string
+function objectToQueryString(obj) {
+  return Object.entries(obj)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+}
+
+let query = { name: "John", age: 30 };
+console.log(objectToQueryString(query)); // "name=John&age=30"
+```
+
+---
+
+### 6. Object.assign() - Merge Objects
+
+```javascript
+// Copy object
+let source = { name: "John", age: 30 };
+let copy = Object.assign({}, source);
+console.log(copy); // { name: 'John', age: 30 }
+
+// Modify copy doesn't affect original
+copy.name = "Jane";
+console.log(source.name); // John (unchanged)
+
+// Merge multiple objects
+let obj1 = { a: 1, b: 2 };
+let obj2 = { b: 3, c: 4 };
+let obj3 = { c: 5, d: 6 };
+
+let merged = Object.assign({}, obj1, obj2, obj3);
+console.log(merged); // { a: 1, b: 3, c: 5, d: 6 }
+
+// Later objects override earlier ones
+let target = { x: 1 };
+Object.assign(target, { x: 2 }, { x: 3 });
+console.log(target.x); // 3
+
+// Practical use: Update object with defaults
+let defaults = { theme: "light", size: "medium" };
+let userSettings = { theme: "dark" };
+let final = Object.assign({}, defaults, userSettings);
+console.log(final); // { theme: 'dark', size: 'medium' }
+
+// Note: Shallow copy
+let deep = { user: { name: "John" } };
+let shallowCopy = Object.assign({}, deep);
+shallowCopy.user.name = "Jane";
+console.log(deep.user.name); // "Jane" (original changed!)
+```
+
+---
+
+### 7. Object.freeze() - Prevent Modifications
+
+```javascript
+let person = { name: "John", age: 30 };
+
+// Freeze object
+Object.freeze(person);
+
+// Attempt modifications fail silently (or throw error in strict mode)
+person.name = "Jane"; // Fails
+person.age = 31; // Fails
+delete person.name; // Fails
+
+console.log(person); // { name: 'John', age: 30 } (unchanged)
+
+// Check if frozen
+console.log(Object.isFrozen(person)); // true
+
+// Freeze nested objects (shallow freeze)
+let user = {
+  name: "John",
+  address: { city: "NYC" },
+};
+
+Object.freeze(user);
+user.address.city = "LA"; // Works! (nested object not frozen)
+console.log(user.address.city); // "LA"
+
+// Deep freeze
+function deepFreeze(obj) {
+  Object.freeze(obj);
+  Object.values(obj).forEach((value) => {
+    if (typeof value === "object") {
+      deepFreeze(value);
+    }
+  });
+  return obj;
+}
+
+let deepUser = {
+  name: "John",
+  address: { city: "NYC" },
+};
+
+deepFreeze(deepUser);
+// deepUser.address.city = "LA"; // Now fails
+```
+
+---
+
+### 8. Object.seal() - Prevent Add/Delete, Allow Modify
+
+```javascript
+let person = { name: "John", age: 30 };
+
+// Seal object
+Object.seal(person);
+
+// Modify existing properties (allowed)
+person.name = "Jane";
+person.age = 31;
+console.log(person); // { name: 'Jane', age: 31 }
+
+// Add new properties (fails)
+person.email = "john@example.com"; // Fails
+console.log(person.email); // undefined
+
+// Delete properties (fails)
+delete person.age; // Fails
+console.log(person.age); // 31 (unchanged)
+
+// Check if sealed
+console.log(Object.isSealed(person)); // true
+
+// Difference from freeze
+let frozen = Object.freeze({ x: 1 });
+let sealed = Object.seal({ x: 1 });
+
+frozen.x = 2; // Fails
+console.log(frozen.x); // 1
+
+sealed.x = 2; // Succeeds
+console.log(sealed.x); // 2
+```
+
+---
+
+### 9. Object Iteration with for...in
+
+```javascript
+// Basic iteration
 let person = { name: "John", age: 30, city: "NYC" };
 
+for (let key in person) {
+  console.log(`${key}: ${person[key]}`);
+}
+// Output:
+// name: John
+// age: 30
+// city: NYC
+
+// Only own properties
+let proto = { inherited: true };
+let obj = Object.create(proto);
+obj.own = true;
+
+for (let key in obj) {
+  console.log(key); // "own", "inherited"
+}
+
+// To get only own properties:
+for (let key in obj) {
+  if (obj.hasOwnProperty(key)) {
+    console.log(key); // "own"
+  }
+}
+
+// Skip certain properties
+let user = { name: "John", _private: "secret", age: 30 };
+for (let key in user) {
+  if (!key.startsWith("_")) {
+    console.log(`${key}: ${user[key]}`);
+  }
+}
+// Output:
+// name: John
+// age: 30
+```
+
+---
+
+### 10. Object Destructuring
+
+```javascript
+// Basic destructuring
+let person = { name: "John", age: 30, city: "NYC" };
 const { name, age } = person;
-console.log(name, age); // Output: John, 30
+console.log(name, age); // John, 30
 
 // Rename properties
 const { name: personName, age: personAge } = person;
-console.log(personName); // Output: John
+console.log(personName, personAge); // John, 30
 
 // Default values
-const { phone = "N/A" } = person;
-console.log(phone); // Output: N/A
+const { phone = "N/A", email = "not provided" } = person;
+console.log(phone, email); // N/A, not provided
 
 // Nested destructuring
 let user = {
-  id: 1,
-  profile: { name: "John", email: "john@example.com" },
+  name: "John",
+  address: {
+    street: "123 Main St",
+    city: "NYC",
+  },
 };
 
 const {
-  profile: { name, email },
+  address: { city, street },
 } = user;
-console.log(name, email);
+console.log(city, street); // NYC, 123 Main St
+
+// Rest properties
+let { name: n, ...rest } = person;
+console.log(n); // John
+console.log(rest); // { age: 30, city: 'NYC' }
+
+// In function parameters
+function printUser({ name, age }) {
+  console.log(`${name} is ${age} years old`);
+}
+
+printUser(person); // John is 30 years old
+```
+
+---
+
+### 11. Object Comparison & Merging Patterns
+
+#### Deep Copy
+
+```javascript
+// Shallow copy (doesn't copy nested objects)
+let original = { name: "John", address: { city: "NYC" } };
+let shallow = { ...original };
+shallow.address.city = "LA";
+console.log(original.address.city); // "LA" (changed!)
+
+// Deep copy using JSON
+let deepCopy = JSON.parse(JSON.stringify(original));
+deepCopy.address.city = "Boston";
+console.log(original.address.city); // "NYC" (unchanged!)
+
+// Deep copy function
+function deepCopy(obj) {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (obj instanceof Date) return new Date(obj.getTime());
+  if (obj instanceof Array) return obj.map((item) => deepCopy(item));
+
+  let copy = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepCopy(obj[key]);
+    }
+  }
+  return copy;
+}
+```
+
+---
+
+#### Object Comparison
+
+```javascript
+// Simple equality (reference comparison)
+let obj1 = { x: 1 };
+let obj2 = { x: 1 };
+console.log(obj1 === obj2); // false (different references)
+
+// Deep comparison
+function deepEqual(obj1, obj2) {
+  let keys1 = Object.keys(obj1);
+  let keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  for (let key of keys1) {
+    if (!keys2.includes(key)) return false;
+    if (typeof obj1[key] === "object" && typeof obj2[key] === "object") {
+      if (!deepEqual(obj1[key], obj2[key])) return false;
+    } else if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+let user1 = { name: "John", address: { city: "NYC" } };
+let user2 = { name: "John", address: { city: "NYC" } };
+console.log(deepEqual(user1, user2)); // true
 ```
 
 ---
