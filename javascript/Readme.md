@@ -6,6 +6,17 @@
 2. [Hoisting & Temporal Dead Zone](#hoisting--temporal-dead-zone)
 3. [Data Types](#data-types)
 4. [Scope Management](#scope-management)
+5. [Functions](#functions)
+6. [Function Types & Declarations](#function-types--declarations)
+7. [Advanced Function Concepts](#advanced-function-concepts)
+8. [Control Flow Statements](#control-flow-statements)
+9. [Loops & Iteration](#loops--iteration)
+10. [Error Handling](#error-handling)
+11. [String Methods & Manipulation](#string-methods--manipulation)
+12. [Array Methods & Operations](#array-methods--operations)
+13. [Object Manipulation](#object-manipulation)
+14. [Asynchronous JavaScript](#asynchronous-javascript)
+15. [Best Practices & Performance](#best-practices--performance)
 
 ---
 
@@ -39,7 +50,6 @@ const temp3 = "i like your knowledge"; // Block-scoped, immutable
 ---
 
 ## Hoisting & Temporal Dead Zone
-
 
 ### Hoisting Mechanism
 
@@ -1061,4 +1071,1618 @@ typeof value === "boolean"; // For booleans
 
 ---
 
-**Last Updated**: January 20, 2026
+## **Last Updated**: January 20, 2026
+
+## Functions
+
+### Overview
+
+Functions are reusable blocks of code designed to perform specific tasks. They are **first-class objects** in JavaScript, meaning they can be assigned to variables, passed as arguments, and returned from other functions.
+
+### Function Declaration Syntax
+
+```javascript
+// Basic function declaration
+function greet(name) {
+  console.log(`hello ${name}`);
+}
+
+greet("John"); // Output: hello John
+```
+
+**Characteristics**:
+
+- Functions are hoisted to the top of their scope
+- Can be called before declaration
+- Clear, readable syntax
+- Ideal for main application logic
+
+---
+
+## Function Types & Declarations
+
+### 1. Named Functions
+
+Named functions are declared with the `function` keyword and have an explicit name.
+
+```javascript
+// Named Function
+function greet(name) {
+  console.log(`hello ${name}`);
+}
+
+greet("Alice"); // Output: hello Alice
+```
+
+**Advantages**:
+
+- Easier to debug (name appears in stack trace)
+- Can be hoisted
+- Self-documenting code
+
+---
+
+### 2. Anonymous Functions
+
+Anonymous functions have no name and are typically assigned to variables or used as callbacks.
+
+```javascript
+// Anonymous Function
+var temp_function = function (name) {
+  console.log(`hello ${name}`);
+};
+
+temp_function("Bob"); // Output: hello Bob
+```
+
+**Characteristics**:
+
+- No name identifier
+- Must be assigned before use
+- Not hoisted (stored in variable)
+- Often used as callbacks
+
+---
+
+### 3. Arrow Functions
+
+Arrow functions provide a concise syntax using the `=>` operator (ES6+).
+
+```javascript
+// Arrow Function
+var temp_function = (name) => {
+  console.log(`hello ${name}`);
+};
+
+temp_function("Charlie"); // Output: hello Charlie
+
+// Concise syntax (implicit return)
+const add = (a, b) => a + b;
+console.log(add(5, 3)); // Output: 8
+
+// Single parameter (parentheses optional)
+const square = (x) => x * x;
+console.log(square(4)); // Output: 16
+```
+
+**Advantages**:
+
+- Cleaner, more concise syntax
+- Implicit return (if body has single expression)
+- Lexically bound `this` (no own `this`)
+- Great for array methods like `.map()`, `.filter()`
+
+**Disadvantages**:
+
+- Cannot be used as constructors (no `new`)
+- No `arguments` object
+- Different `this` binding
+
+---
+
+### Function Parameters & Arguments
+
+#### Basic Parameters
+
+```javascript
+function cart(products) {
+  console.log(`${products} are in cart`);
+}
+
+cart("apple"); // Output: apple are in cart
+cart("mango"); // Output: mango are in cart
+cart("banana"); // Output: banana are in cart
+```
+
+#### Multiple Parameters
+
+```javascript
+function printC(name, count, price, discount) {
+  console.log(
+    `name is ${name} and count is ${count} and price is ${price} and discount is ${discount}`,
+  );
+}
+
+printC("apple", 10, 100, 10);
+// Output: name is apple and count is 10 and price is 100 and discount is 10
+```
+
+---
+
+### Function Expressions
+
+Function expressions assign a function to a variable. The function may be named or anonymous.
+
+```javascript
+// Function expression (anonymous)
+var cart = function (products) {
+  console.log(`${products} are in cart`);
+};
+
+cart("apple"); // Output: apple are in cart
+cart("mango"); // Output: mango are in cart
+cart("banana"); // Output: banana are in cart
+
+// Function expression with sum
+var sum = function (...numbers) {
+  let result = 0;
+  for (let number of numbers) {
+    result += number;
+  }
+  return result;
+};
+
+console.log(sum(1, 2, 3, 4, 5)); // Output: 15
+```
+
+**Difference from Declaration**:
+
+- Not hoisted (must be defined before use)
+- More flexible (can be conditional)
+- Can be anonymous
+
+---
+
+### Default Parameters
+
+Default parameters provide fallback values when arguments are not supplied.
+
+```javascript
+// Default parameter
+function greet(name = "Guest") {
+  console.log(`Hello, ${name}!`);
+}
+
+greet(); // Output: Hello, Guest!
+greet("John"); // Output: Hello, John!
+```
+
+**Use Cases**:
+
+- Providing sensible defaults
+- Avoiding `undefined` errors
+- Cleaner parameter handling
+
+---
+
+### Rest Parameters (...)
+
+Rest parameters allow a function to accept unlimited number of arguments as an array.
+
+```javascript
+// Rest parameter
+function sum(...numbers) {
+  let result = 0;
+  for (let number of numbers) {
+    result += number;
+  }
+  return result;
+}
+
+console.log(sum(1, 2, 3, 4, 5)); // Output: 15
+
+// Rest parameter with logging
+function rest1(...args) {
+  console.log(args); // Output: [1, 2, 3, 4, 5]
+}
+
+rest1(1, 2, 3, 4, 5);
+```
+
+**Characteristics**:
+
+- Must be the last parameter
+- Collects remaining arguments into an array
+- Flexible function signatures
+- Replaces `arguments` object
+
+---
+
+### Early Return Pattern
+
+Early returns simplify logic by exiting the function when conditions are met.
+
+```javascript
+// Early return function
+function checkAge(age) {
+  if (age < 18) {
+    return "Underage";
+  }
+  return "Adult";
+}
+
+console.log(checkAge(16)); // Output: Underage
+console.log(checkAge(20)); // Output: Adult
+```
+
+**Benefits**:
+
+- Reduces nested conditionals
+- Clearer code flow
+- Easier to read and maintain
+
+---
+
+## Advanced Function Concepts
+
+### First-Class Functions
+
+First-class functions can be treated as data: assigned to variables, passed as arguments, and returned from other functions.
+
+```javascript
+// First-class function - storing in variable
+function greet(name) {
+  return function (message) {
+    console.log(`Hello, ${name}! ${message}`);
+  };
+}
+
+const greetJohn = greet("John");
+greetJohn("Welcome to the platform!");
+// Output: Hello, John! Welcome to the platform!
+```
+
+---
+
+### Functions as Arguments (Callbacks)
+
+Functions can be passed as arguments to other functions for execution.
+
+```javascript
+// Function can be passed as argument to another function
+function temp_b(fnc) {
+  fnc();
+}
+
+temp_b(function fnc2() {
+  console.log("first class function");
+});
+// Output: first class function
+```
+
+**Common Use Cases**:
+
+- Event handlers
+- Array methods (`.map()`, `.filter()`, `.forEach()`)
+- Asynchronous callbacks
+- Higher-order functions
+
+---
+
+### Functions Returning Functions
+
+A function can return another function, creating closures.
+
+```javascript
+// Function can be returned from another function
+function abcd() {
+  return function () {
+    console.log("function returned from another function");
+  };
+}
+
+var temp = abcd();
+temp(); // Output: function returned from another function
+
+// Or call directly
+abcd()(); // Output: function returned from another function
+```
+
+**Benefits**:
+
+- Creates closures
+- Function factories
+- Decorator patterns
+- Partial application
+
+---
+
+### Higher-Order Functions
+
+Higher-order functions take functions as arguments or return functions.
+
+```javascript
+// Higher order function
+function higherOrderFunction(fnc, value) {
+  return fnc(value);
+}
+
+function square(x) {
+  return x * x;
+}
+
+console.log(higherOrderFunction(square, 5)); // Output: 25
+```
+
+**Common Higher-Order Functions**:
+
+#### map() - Transform Elements
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const squared = numbers.map((x) => x * x);
+console.log(squared); // [1, 4, 9, 16, 25]
+```
+
+#### filter() - Filter Elements
+
+```javascript
+const numbers = [1, 2, 3, 4, 5, 6];
+const evens = numbers.filter((x) => x % 2 === 0);
+console.log(evens); // [2, 4, 6]
+```
+
+#### forEach() - Iterate Elements
+
+```javascript
+const fruits = ["apple", "banana", "orange"];
+fruits.forEach((fruit) => console.log(fruit));
+// Output: apple, banana, orange
+```
+
+#### reduce() - Accumulate Values
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((acc, num) => acc + num, 0);
+console.log(sum); // 15
+```
+
+---
+
+### Closures
+
+A closure is a function that has access to variables from its parent scope, even after the parent function has executed.
+
+```javascript
+function makeMultiplier(multiplier) {
+  return function (number) {
+    return number * multiplier;
+  };
+}
+
+const double = makeMultiplier(2);
+const triple = makeMultiplier(3);
+
+console.log(double(5)); // Output: 10
+console.log(triple(5)); // Output: 15
+```
+
+**Key Points**:
+
+- Inner function "remembers" outer scope variables
+- Useful for data privacy
+- Foundation for many JavaScript patterns
+
+---
+
+### Function Hoisting
+
+Named functions are hoisted to the top of their scope, allowing them to be called before declaration.
+
+```javascript
+// Function can be called before declaration (hoisting)
+greetUser("John"); // Output: Hello John!
+
+function greetUser(name) {
+  console.log(`Hello ${name}!`);
+}
+```
+
+**Note**: Function expressions and arrow functions are NOT hoisted (only the variable declaration is hoisted as `undefined`).
+
+---
+
+### Common Function Patterns
+
+#### Immediately Invoked Function Expression (IIFE)
+
+```javascript
+(function () {
+  console.log("This runs immediately!");
+})();
+// Output: This runs immediately!
+
+// With parameters
+(function (name) {
+  console.log(`Hello ${name}!`);
+})("Alice");
+// Output: Hello Alice!
+```
+
+**Use Cases**:
+
+- Avoid global scope pollution
+- Create private variables
+- Module pattern
+
+#### Function as Method
+
+```javascript
+const calculator = {
+  value: 0,
+  add: function (num) {
+    this.value += num;
+    return this;
+  },
+  subtract: function (num) {
+    this.value -= num;
+    return this;
+  },
+  result: function () {
+    return this.value;
+  },
+};
+
+console.log(calculator.add(5).subtract(2).result()); // Output: 3
+```
+
+#### Constructor Function
+
+```javascript
+function User(name, email) {
+  this.name = name;
+  this.email = email;
+}
+
+const user1 = new User("John", "john@example.com");
+console.log(user1.name); // Output: John
+```
+
+---
+
+### Pure vs Impure Functions
+
+#### Pure Function (Recommended)
+
+```javascript
+// Pure function - same input always produces same output
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(2, 3)); // 5
+console.log(add(2, 3)); // 5 (predictable)
+```
+
+**Characteristics**:
+
+- No side effects
+- Deterministic (same input = same output)
+- Easier to test and debug
+- Cacheable results
+
+#### Impure Function
+
+```javascript
+let total = 0;
+
+// Impure function - depends on external state
+function addToTotal(amount) {
+  total += amount;
+  return total;
+}
+
+console.log(addToTotal(5)); // 5
+console.log(addToTotal(5)); // 10 (different output, same input!)
+```
+
+**Issues**:
+
+- Depends on external state
+- Hard to predict behavior
+- Difficult to test
+- Side effects (modifies external data)
+
+**Best Practice**: Write pure functions whenever possible!
+
+---
+
+### Function Summary Table
+
+| Type           | Syntax                   | Hoisted | When to Use                    |
+| -------------- | ------------------------ | ------- | ------------------------------ |
+| Named Function | `function name() {}`     | Yes     | Main logic, reusable functions |
+| Anonymous      | `function() {}`          | No      | Callbacks, one-time use        |
+| Arrow          | `() => {}`               | No      | Array methods, modern code     |
+| Expression     | `var fn = function() {}` | No      | Conditional functions          |
+| IIFE           | `(function() {})()`      | No      | Avoid global scope             |
+
+---
+
+## Control Flow Statements
+
+Control flow statements allow you to make decisions and execute code conditionally.
+
+### If Statement
+
+```javascript
+let age = 20;
+
+if (age >= 18) {
+  console.log("You are an adult");
+} else {
+  console.log("You are a minor");
+}
+// Output: You are an adult
+```
+
+**Syntax**:
+
+```javascript
+if (condition) {
+  // Code executes if condition is true
+} else if (anotherCondition) {
+  // Code executes if anotherCondition is true
+} else {
+  // Code executes if all conditions are false
+}
+```
+
+---
+
+### Switch Statement
+
+```javascript
+let day = 3;
+
+switch (day) {
+  case 1:
+    console.log("Monday");
+    break;
+  case 2:
+    console.log("Tuesday");
+    break;
+  case 3:
+    console.log("Wednesday");
+    break;
+  default:
+    console.log("Invalid day");
+}
+// Output: Wednesday
+```
+
+**Characteristics**:
+
+- Use `break` to prevent fall-through
+- `default` case is optional
+- Compares using strict equality (`===`)
+- More readable than nested if-else for multiple cases
+
+---
+
+### Ternary Operator (Conditional Expression)
+
+```javascript
+let age = 25;
+let status = age >= 18 ? "Adult" : "Minor";
+console.log(status); // Output: Adult
+
+// Nested ternary
+let score = 85;
+let grade = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : "F";
+console.log(grade); // Output: B
+```
+
+**Best Practice**: Avoid deeply nested ternaries. Use if-else for complex logic.
+
+---
+
+## Loops & Iteration
+
+Loops execute code repeatedly until a condition is met.
+
+### For Loop
+
+```javascript
+// Traditional for loop
+for (let i = 0; i < 5; i++) {
+  console.log(i); // Output: 0, 1, 2, 3, 4
+}
+
+// Loop through array
+let fruits = ["apple", "banana", "orange"];
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}
+// Output: apple, banana, orange
+```
+
+**Components**:
+
+- **Initialization**: `let i = 0` (setup counter)
+- **Condition**: `i < 5` (test before iteration)
+- **Increment**: `i++` (update after iteration)
+
+---
+
+### While Loop
+
+```javascript
+let count = 0;
+
+while (count < 5) {
+  console.log(count); // Output: 0, 1, 2, 3, 4
+  count++;
+}
+
+// Do-while (executes at least once)
+let num = 0;
+do {
+  console.log(num); // Output: 0
+  num++;
+} while (num < 0); // Condition is false, but runs once
+```
+
+---
+
+### For...In Loop
+
+```javascript
+// Iterate over object properties
+let person = {
+  name: "John",
+  age: 30,
+  city: "New York",
+};
+
+for (let key in person) {
+  console.log(`${key}: ${person[key]}`);
+}
+// Output: name: John, age: 30, city: New York
+
+// For array (not recommended)
+let arr = ["a", "b", "c"];
+for (let index in arr) {
+  console.log(index, arr[index]); // 0 a, 1 b, 2 c
+}
+```
+
+**Use Case**: Iterating over object properties (keys)
+
+---
+
+### For...Of Loop
+
+```javascript
+// Iterate over array values (preferred over for...in)
+let fruits = ["apple", "banana", "orange"];
+
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+// Output: apple, banana, orange
+
+// Works with strings
+let text = "Hello";
+for (let char of text) {
+  console.log(char);
+}
+// Output: H, e, l, l, o
+
+// Works with Map and Set
+let myMap = new Map([
+  ["a", 1],
+  ["b", 2],
+]);
+for (let [key, value] of myMap) {
+  console.log(`${key}: ${value}`);
+}
+// Output: a: 1, b: 2
+```
+
+**Benefits**:
+
+- Cleaner syntax than for loops
+- No need for index management
+- Works with all iterables
+- Better readability
+
+---
+
+### ForEach Method
+
+```javascript
+let numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach((num, index) => {
+  console.log(`Index ${index}: ${num}`);
+});
+// Output: Index 0: 1, Index 1: 2, etc.
+
+// Object forEach alternative
+let obj = { a: 1, b: 2, c: 3 };
+Object.entries(obj).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`);
+});
+```
+
+---
+
+### Break and Continue
+
+```javascript
+// Break - exit loop
+for (let i = 0; i < 10; i++) {
+  if (i === 5) break; // Exit when i equals 5
+  console.log(i); // Output: 0, 1, 2, 3, 4
+}
+
+// Continue - skip iteration
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue; // Skip when i equals 2
+  console.log(i); // Output: 0, 1, 3, 4
+}
+```
+
+---
+
+## Error Handling
+
+Error handling ensures your program doesn't crash unexpectedly.
+
+### Try-Catch Block
+
+```javascript
+try {
+  // Code that might throw an error
+  let result = JSON.parse("invalid json");
+} catch (error) {
+  // Handle the error
+  console.log("Error caught:", error.message);
+} finally {
+  // Runs regardless of error
+  console.log("Cleanup complete");
+}
+```
+
+**Flow**:
+
+1. Try block executes
+2. If error occurs, catch block runs
+3. Finally block always runs (optional)
+
+---
+
+### Throwing Errors
+
+```javascript
+function validateAge(age) {
+  if (age < 0) {
+    throw new Error("Age cannot be negative");
+  }
+  if (age < 18) {
+    throw new Error("Must be 18 or older");
+  }
+  console.log("Valid age:", age);
+}
+
+try {
+  validateAge(-5);
+} catch (error) {
+  console.log(error.message); // Output: Age cannot be negative
+}
+```
+
+---
+
+### Error Types
+
+```javascript
+// SyntaxError - Invalid syntax
+// let x = ;  // SyntaxError
+
+// TypeError - Wrong data type
+let num = 5;
+// num.toUpperCase();  // TypeError: num.toUpperCase is not a function
+
+// ReferenceError - Undefined variable
+// console.log(undefinedVar);  // ReferenceError
+
+// RangeError - Invalid range
+// new Array(-1);  // RangeError: Invalid array length
+
+// Custom error
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+try {
+  throw new ValidationError("Custom error message");
+} catch (error) {
+  console.log(error.name, error.message);
+}
+// Output: ValidationError Custom error message
+```
+
+---
+
+## String Methods & Manipulation
+
+Strings have many built-in methods for manipulation and inspection.
+
+### String Case Methods
+
+```javascript
+let text = "Hello World";
+
+console.log(text.toUpperCase()); // Output: HELLO WORLD
+console.log(text.toLowerCase()); // Output: hello world
+```
+
+---
+
+### String Search Methods
+
+```javascript
+let text = "Hello World";
+
+console.log(text.indexOf("o")); // Output: 4
+console.log(text.lastIndexOf("o")); // Output: 7
+console.log(text.includes("World")); // Output: true
+console.log(text.startsWith("Hello")); // Output: true
+console.log(text.endsWith("World")); // Output: true
+```
+
+---
+
+### String Extraction Methods
+
+```javascript
+let text = "Hello World";
+
+console.log(text.slice(0, 5)); // Output: Hello
+console.log(text.substring(6)); // Output: World
+console.log(text.substr(0, 5)); // Output: Hello (deprecated)
+
+// Character at index
+console.log(text.charAt(0)); // Output: H
+console.log(text.charCodeAt(0)); // Output: 72
+```
+
+---
+
+### String Replacement & Splitting
+
+```javascript
+let text = "Hello World";
+
+console.log(text.replace("World", "JavaScript"));
+// Output: Hello JavaScript
+
+console.log(text.replaceAll("l", "L"));
+// Output: HeLLo worLd
+
+let words = text.split(" ");
+console.log(words); // Output: ["Hello", "World"]
+
+console.log(text.repeat(2));
+// Output: Hello WorldHello World
+```
+
+---
+
+### String Padding & Trimming
+
+```javascript
+let text = "   Hello World   ";
+
+console.log(text.trim()); // Output: Hello World
+console.log(text.trimStart()); // Output: Hello World
+console.log(text.trimEnd()); // Output:    Hello World
+
+let num = "5";
+console.log(num.padStart(3, "0")); // Output: 005
+console.log(num.padEnd(3, "0")); // Output: 500
+```
+
+---
+
+## Array Methods & Operations
+
+Arrays have powerful methods for manipulation, filtering, and transformation.
+
+### Array Modification Methods
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Add elements
+arr.push(6); // Add to end: [1, 2, 3, 4, 5, 6]
+arr.unshift(0); // Add to start: [0, 1, 2, 3, 4, 5, 6]
+
+// Remove elements
+arr.pop(); // Remove from end: [0, 1, 2, 3, 4, 5]
+arr.shift(); // Remove from start: [1, 2, 3, 4, 5]
+
+// Splice (modify array)
+arr.splice(2, 1); // Remove 1 element at index 2: [1, 2, 4, 5]
+arr.splice(2, 0, 3); // Insert element: [1, 2, 3, 4, 5]
+```
+
+---
+
+### Array Search Methods
+
+```javascript
+let arr = [1, 2, 3, 4, 5, 3];
+
+console.log(arr.indexOf(3)); // Output: 2
+console.log(arr.lastIndexOf(3)); // Output: 5
+console.log(arr.includes(4)); // Output: true
+
+// Find first matching element
+console.log(arr.find((x) => x > 3)); // Output: 4
+
+// Find index of first matching element
+console.log(arr.findIndex((x) => x > 3)); // Output: 3
+```
+
+---
+
+### Array Transformation Methods
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Map - transform each element
+let doubled = arr.map((x) => x * 2);
+console.log(doubled); // Output: [2, 4, 6, 8, 10]
+
+// Filter - keep matching elements
+let evens = arr.filter((x) => x % 2 === 0);
+console.log(evens); // Output: [2, 4]
+
+// Reduce - accumulate into single value
+let sum = arr.reduce((acc, x) => acc + x, 0);
+console.log(sum); // Output: 15
+```
+
+---
+
+### Array Sorting & Reversing
+
+```javascript
+let arr = [3, 1, 4, 1, 5, 9];
+
+// Reverse (modifies original)
+arr.reverse();
+console.log(arr); // Output: [9, 5, 1, 4, 1, 3]
+
+// Sort (modifies original, alphabetical by default)
+let nums = [3, 1, 4, 1, 5];
+nums.sort((a, b) => a - b); // Numeric sort
+console.log(nums); // Output: [1, 1, 3, 4, 5]
+
+// Sort descending
+nums.sort((a, b) => b - a);
+console.log(nums); // Output: [5, 4, 3, 1, 1]
+```
+
+---
+
+### Array Joining & Flattening
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Join elements into string
+console.log(arr.join(", ")); // Output: 1, 2, 3, 4, 5
+console.log(arr.join("-")); // Output: 1-2-3-4-5
+
+// Flatten nested arrays
+let nested = [1, [2, 3], [4, [5, 6]]];
+console.log(nested.flat()); // Output: [1, 2, 3, 4, [5, 6]]
+console.log(nested.flat(2)); // Output: [1, 2, 3, 4, 5, 6]
+
+// FlatMap - map then flatten
+let arr2 = [1, 2, 3];
+let result = arr2.flatMap((x) => [x, x * 2]);
+console.log(result); // Output: [1, 2, 2, 4, 3, 6]
+```
+
+---
+
+### Array Checking Methods
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// Check if all elements match condition
+console.log(arr.every((x) => x > 0)); // Output: true
+console.log(arr.every((x) => x > 3)); // Output: false
+
+// Check if some elements match condition
+console.log(arr.some((x) => x > 3)); // Output: true
+console.log(arr.some((x) => x > 10)); // Output: false
+```
+
+---
+
+## Object Manipulation
+
+Objects are fundamental to JavaScript. Learn how to work with them effectively.
+
+### Object Creation
+
+```javascript
+// Object literal
+let person = {
+  name: "John",
+  age: 30,
+  email: "john@example.com",
+};
+
+// Constructor function
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+let person2 = new Person("Jane", 25);
+
+// Object.create()
+let proto = {
+  greet: function () {
+    return "Hello";
+  },
+};
+let obj = Object.create(proto);
+obj.name = "Bob";
+```
+
+---
+
+### Object Properties
+
+```javascript
+let person = {
+  name: "John",
+  age: 30,
+};
+
+// Add property
+person.email = "john@example.com";
+person["phone"] = "123-456-7890";
+
+// Access property
+console.log(person.name); // John
+console.log(person["age"]); // 30
+
+// Delete property
+delete person.phone;
+
+// Check property existence
+console.log("name" in person); // true
+console.log(person.hasOwnProperty("email")); // true
+```
+
+---
+
+### Object Methods
+
+```javascript
+let person = { name: "John", age: 30, email: "john@example.com" };
+
+// Get all keys
+console.log(Object.keys(person));
+// Output: ["name", "age", "email"]
+
+// Get all values
+console.log(Object.values(person));
+// Output: ["John", 30, "john@example.com"]
+
+// Get key-value pairs
+console.log(Object.entries(person));
+// Output: [["name", "John"], ["age", 30], ["email", "john@example.com"]]
+
+// Copy object
+let copy = Object.assign({}, person);
+let copy2 = { ...person }; // Spread syntax
+
+// Freeze object (prevent modifications)
+Object.freeze(person);
+// person.age = 31; // Throws error in strict mode
+
+// Seal object (allow modifications, no add/delete)
+Object.seal(person);
+```
+
+---
+
+### Object Destructuring
+
+```javascript
+// Extract properties into variables
+let person = { name: "John", age: 30, city: "NYC" };
+
+const { name, age } = person;
+console.log(name, age); // Output: John, 30
+
+// Rename properties
+const { name: personName, age: personAge } = person;
+console.log(personName); // Output: John
+
+// Default values
+const { phone = "N/A" } = person;
+console.log(phone); // Output: N/A
+
+// Nested destructuring
+let user = {
+  id: 1,
+  profile: { name: "John", email: "john@example.com" },
+};
+
+const {
+  profile: { name, email },
+} = user;
+console.log(name, email);
+```
+
+---
+
+## Asynchronous JavaScript
+
+Asynchronous code executes without blocking the main thread.
+
+### Callbacks
+
+```javascript
+function fetchData(callback) {
+  setTimeout(() => {
+    let data = { id: 1, name: "John" };
+    callback(data);
+  }, 1000);
+}
+
+fetchData((data) => {
+  console.log("Data received:", data);
+});
+// Output (after 1 second): Data received: { id: 1, name: 'John' }
+```
+
+**Issue**: Callback Hell (nested callbacks)
+
+---
+
+### Promises
+
+```javascript
+// Create a promise
+let promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Success!");
+  }, 1000);
+});
+
+// Consume a promise
+promise
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error))
+  .finally(() => console.log("Done"));
+// Output: Success!, Done
+
+// Promise states
+// - Pending: Initial state
+// - Fulfilled: Operation successful
+// - Rejected: Operation failed
+```
+
+---
+
+### Async/Await
+
+```javascript
+// Async function returns a promise
+async function fetchUser() {
+  return { id: 1, name: "John" };
+}
+
+// Await pauses execution until promise resolves
+async function main() {
+  try {
+    let user = await fetchUser();
+    console.log(user); // { id: 1, name: 'John' }
+  } catch (error) {
+    console.log("Error:", error);
+  }
+}
+
+main();
+```
+
+**Benefits**:
+
+- More readable than promise chains
+- Looks like synchronous code
+- Better error handling
+
+---
+
+### Promise Methods
+
+```javascript
+// Promise.all - wait for all promises
+Promise.all([promise1, promise2, promise3])
+  .then((results) => console.log(results))
+  .catch((error) => console.log(error));
+
+// Promise.race - wait for first promise
+Promise.race([promise1, promise2]).then((result) => console.log(result));
+
+// Promise.allSettled - wait for all (regardless of outcome)
+Promise.allSettled([promise1, promise2]).then((results) =>
+  console.log(results),
+);
+
+// Promise.any - wait for first successful promise
+Promise.any([promise1, promise2]).then((result) => console.log(result));
+```
+
+---
+
+## Best Practices & Performance
+
+### Code Quality
+
+#### Use `use strict`
+
+```javascript
+"use strict";
+
+// Prevents undeclared variables
+x = 3.14; // Error in strict mode
+
+// Makes eval safer
+function myFunction() {
+  x = 3.14; // Error
+}
+```
+
+---
+
+#### Comment Your Code
+
+```javascript
+// Single-line comment
+
+/*
+ * Multi-line comment
+ * Useful for documentation
+ */
+
+/**
+ * JSDoc comment (function documentation)
+ * @param {number} x - First number
+ * @param {number} y - Second number
+ * @returns {number} Sum of x and y
+ */
+function add(x, y) {
+  return x + y;
+}
+```
+
+---
+
+### Performance Tips
+
+#### 1. Avoid Global Variables
+
+```javascript
+// ❌ Bad
+var globalCounter = 0;
+
+function increment() {
+  globalCounter++;
+}
+
+// ✅ Good
+function createCounter() {
+  let counter = 0;
+  return function () {
+    counter++;
+    return counter;
+  };
+}
+```
+
+---
+
+#### 2. Use Const by Default
+
+```javascript
+// ✅ Good practice
+const user = { name: "John" };
+let counter = 0;
+var oldStyle = 1; // Avoid in modern JS
+```
+
+---
+
+#### 3. Efficient Array Operations
+
+```javascript
+// ❌ Slow - searches entire array each time
+for (let i = 0; i < array.length; i++) {
+  // Do something
+}
+
+// ✅ Fast - cache length
+let len = array.length;
+for (let i = 0; i < len; i++) {
+  // Do something
+}
+
+// ✅ Or use modern methods
+array.forEach((item) => {
+  // Do something
+});
+```
+
+---
+
+#### 4. Avoid Memory Leaks
+
+```javascript
+// ❌ Memory leak
+let largeArray = [];
+function collectData() {
+  largeArray.push(new Array(1000000));
+}
+
+// ✅ Clean up
+function collectData() {
+  let data = new Array(1000000);
+  // Process data
+  data = null; // Clear reference
+}
+```
+
+---
+
+#### 5. Minimize DOM Manipulation
+
+```javascript
+// ❌ Slow - multiple DOM updates
+for (let i = 0; i < 1000; i++) {
+  document.getElementById("list").innerHTML += `<li>${i}</li>`;
+}
+
+// ✅ Fast - batch updates
+let html = "";
+for (let i = 0; i < 1000; i++) {
+  html += `<li>${i}</li>`;
+}
+document.getElementById("list").innerHTML = html;
+```
+
+---
+
+### Security Best Practices
+
+#### 1. Avoid eval()
+
+```javascript
+// ❌ Dangerous
+let code = "alert('Hello')";
+eval(code); // Executes arbitrary code!
+
+// ✅ Safe
+let data = JSON.parse('{"message":"Hello"}');
+console.log(data.message);
+```
+
+---
+
+#### 2. Validate Input
+
+```javascript
+// ❌ Vulnerable
+function greet(name) {
+  console.log(`Hello ${name}`); // Can contain malicious code
+}
+
+// ✅ Validate
+function greet(name) {
+  if (typeof name !== "string" || name.length > 50) {
+    throw new Error("Invalid name");
+  }
+  console.log(`Hello ${name}`);
+}
+```
+
+---
+
+#### 3. Avoid XSS (Cross-Site Scripting)
+
+```javascript
+// ❌ Vulnerable - directly inserting HTML
+let userInput = "<img src=x onerror='alert(1)'>";
+document.body.innerHTML += userInput; // Executes script!
+
+// ✅ Safe - escape or use textContent
+document.body.textContent = userInput; // Shows text, not HTML
+// Or use a library like DOMPurify
+```
+
+---
+
+### Debugging Tips
+
+#### Console Methods
+
+```javascript
+console.log("General output");
+console.error("Error message");
+console.warn("Warning message");
+console.info("Info message");
+console.table([
+  { a: 1, b: 2 },
+  { a: 3, b: 4 },
+]); // Table format
+console.group("Label");
+console.log("Grouped message");
+console.groupEnd();
+console.time("label");
+// ... code to measure
+console.timeEnd("label"); // Shows execution time
+```
+
+---
+
+#### Breakpoints & Debugging
+
+```javascript
+// Debugger statement (pauses execution)
+function problematicFunction() {
+  debugger; // Execution pauses here if DevTools open
+  let x = 5;
+  return x * 2;
+}
+```
+
+---
+
+## Common Pitfalls & How to Avoid Them
+
+### 1. Type Coercion Issues
+
+```javascript
+// ❌ Problem
+console.log("5" + 3); // Output: "53" (string concatenation)
+console.log("5" - 3); // Output: 2 (numeric subtraction)
+
+// ✅ Solution: Be explicit
+console.log(Number("5") + 3); // Output: 8
+console.log(String(5) + 3); // Output: "53"
+```
+
+---
+
+### 2. This Binding
+
+```javascript
+let person = {
+  name: "John",
+  greet: function () {
+    console.log(this.name); // 'this' refers to person object
+  },
+  greetArrow: () => {
+    console.log(this.name); // 'this' refers to global scope!
+  },
+};
+
+person.greet(); // Output: John
+person.greetArrow(); // Output: undefined
+```
+
+---
+
+### 3. Array Index Issues
+
+```javascript
+// ❌ Problem: Sparse arrays
+let arr = [];
+arr[5] = "value";
+console.log(arr.length); // Output: 6
+console.log(arr[0]); // Output: undefined
+
+// ✅ Solution: Use sequential indices
+let arr2 = ["value"];
+console.log(arr2.length); // Output: 1
+```
+
+---
+
+### 4. Closure Mistakes
+
+```javascript
+// ❌ Problem
+let funcs = [];
+for (var i = 0; i < 3; i++) {
+  funcs.push(() => console.log(i));
+}
+funcs[0](); // Output: 3 (not 0!)
+
+// ✅ Solution: Use let or IIFE
+let funcs2 = [];
+for (let i = 0; i < 3; i++) {
+  funcs2.push(() => console.log(i));
+}
+funcs2[0](); // Output: 0
+```
+
+---
+
+## Quick Reference & Cheat Sheet
+
+### Variable Declaration
+
+```javascript
+const x = 5; // Use by default (block-scoped, immutable)
+let y = 10; // Use if reassignment needed (block-scoped)
+var z = 15; // Avoid in modern JavaScript (function-scoped)
+```
+
+### Operators
+
+```javascript
+// Arithmetic: +, -, *, /, %, **
+// Comparison: ===, !==, <, >, <=, >=
+// Logical: &&, ||, !
+// Assignment: =, +=, -=, *=, /=, %=
+// Unary: ++, --, !, typeof, delete
+// Ternary: condition ? true : false
+```
+
+### String Methods
+
+```javascript
+(toUpperCase(), toLowerCase(), trim(), split(), replace());
+(slice(), substring(), includes(), startsWith(), endsWith());
+(repeat(), padStart(), padEnd(), charAt(), charCodeAt());
+```
+
+### Array Methods
+
+```javascript
+(push(), pop(), shift(), unshift(), splice());
+(map(), filter(), reduce(), forEach(), find());
+(sort(), reverse(), join(), slice(), concat());
+(includes(), indexOf(), every(), some(), flat());
+```
+
+### Object Methods
+
+```javascript
+Object.keys(), Object.values(), Object.entries()
+Object.assign(), Object.freeze(), Object.seal()
+hasOwnProperty(), in operator, for...in loop
+```
+
+---
+
+**Last Updated**: January 23, 2026
