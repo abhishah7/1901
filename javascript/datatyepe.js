@@ -242,3 +242,178 @@ console.log(temp_d);
 // instanceof
 // let obj = {name: "abhishek", email: "test@test.com"};
 // console.log(obj instanceof Object);
+
+
+
+// conditional statements
+// if, if-else, if-else-if, switch
+// loops
+// for, while, do-while, for-in, for-of
+// error handling
+// try-catch-finally, throw
+// type conversion
+// implicit and explicit
+// type coercion
+// truthy and falsy values
+
+// if conditional statements
+let age = 18;
+if(age >= 18){
+    console.log("You are eligible to vote");
+} else {
+    console.log("You are not eligible to vote");
+}
+
+// if-else-if conditional statements
+let marks = 85;
+if(marks >= 90){
+    console.log("You got A grade");
+} else if(marks >= 80){
+    console.log("You got B grade");
+} else if(marks >= 70){
+    console.log("You got C grade");
+} else if(marks >= 60){
+    console.log("You got D grade");
+} else {
+    console.log("You got F grade");
+}
+
+
+// switch conditional statements
+let day = 3;
+switch(day){
+    case 1: console.log("Monday");
+    break;
+    case 2: console.log("Tuesday");
+    break;
+    case 3: console.log("Wednesday");
+    break;
+    case 4: console.log("Thursday");
+    break;
+    case 5: console.log("Friday");
+    break;
+    case 6: console.log("Saturday");
+    break;
+    case 7: console.log("Sunday");
+    break;
+    default: console.log("Invalid day");
+}
+
+//  early return pattern
+function checkEvenOdd(num){
+    if(num % 2 === 0){
+        return "Even";
+    }
+    return "Odd";
+}
+console.log(checkEvenOdd(4));
+console.log(checkEvenOdd(7));
+
+function cheakPositiveNegative(num){
+    if(num < 0) return "Negative";
+    else return "Positive";
+}
+console.log(cheakPositiveNegative(-5));
+console.log(cheakPositiveNegative(10));
+
+// loops
+// for loop
+for(let i=1; i<=5; i++){
+    console.log(i);
+}
+// while loop
+let j = 1;
+while(j<=5){
+    console.log(j);
+    j++;
+}
+// do-while loop
+let k = 1;
+do{
+    console.log(k);
+    k++;
+}while(k<=5);
+// for-in loop
+let person = {name: "abhishek", age: 18, email: "test@test.com"};
+for(let key in person){
+    console.log(key, person[key]);
+}
+// for-of loop
+let colors = ["red", "green", "blue"];
+for(let color of colors){
+    console.log(color);
+}
+// try-catch-finally
+try{
+    console.log("Try block");
+    console.log(a);
+}catch(e){
+    console.log("Catch block");
+    console.log(e);
+}finally{
+    console.log("Finally block");
+}
+
+
+
+
+function getParticipants() {
+var attendanceList = [];
+var elements = document.querySelectorAll("div[data-self-name]");
+for (var item of elements) {
+var name = item.innerHTML;
+attendanceList.push(name);
+}
+var participants = attendanceList.join(", ")
+console.log(participants);
+}
+
+
+
+// rock paper scissors game
+function rpsGame(userChoice) {
+    var choices = ['rock', 'paper', 'scissors'];
+    var computerChoice = choices[Math.floor(Math.random() * 3)];
+    var result = '';    
+    if (userChoice === computerChoice) {
+        result = 'It\'s a tie!';    
+    } else if (userChoice === 'rock') {
+        if (computerChoice === 'paper') {
+            result = 'You lose! Paper covers Rock.';        
+        } else {
+            result = 'You win! Rock crushes Scissors.';        
+        }   
+    }
+    }
+
+
+    // second version of rock paper scissors game
+    function rpsGameV2(userChoice, computerChoice) {
+        if(userChoice === "rock" && computerChoice === "scissors" ) return "You win! Rock crushes Scissors.";
+        if(userChoice === "rock" && computerChoice === "paper" ) return "You lose! Paper covers Rock.";
+        if(userChoice === "paper" && computerChoice === "rock" ) return "You win! Paper covers Rock.";
+        if(userChoice === "paper" && computerChoice === "scissors" ) return "You lose! Scissors cut Paper.";
+        if(userChoice === "scissors" && computerChoice === "paper" ) return "You win! Scissors cut Paper.";
+        if(userChoice === "scissors" && computerChoice === "rock" ) return "You lose! Rock crushes Scissors.";
+        return "It's a tie!";
+    }
+    console.log(rpsGameV2("rock", "scissors"));
+    console.log(rpsGameV2("rock", "paper"));
+    console.log(rpsGameV2("paper", "rock"));    
+
+
+    // third version of rock paper scissors game
+    function rpsGameV3(userChoice, computerChoice) {
+        var rpsDatabase = {
+            "rock": {"scissors": "You win! Rock crushes Scissors.", "paper": "You lose! Paper covers Rock."},
+            "paper": {"rock": "You win! Paper covers Rock.", "scissors": "You lose! Scissors cut Paper."},
+            "scissors": {"paper": "You win! Scissors cut Paper.", "rock": "You lose! Rock crushes Scissors."}
+        };
+        if(userChoice === computerChoice) return "It's a tie!";
+        return rpsDatabase[userChoice][computerChoice];
+    }
+    
+    console.log("Third Version:");
+    console.log(rpsGameV3("rock", "scissors"));
+    console.log(rpsGameV3("rock", "paper"));
+    console.log(rpsGameV3("paper", "rock"));    
