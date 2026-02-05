@@ -14,9 +14,10 @@
 10. [Error Handling](#error-handling)
 11. [String Methods & Manipulation](#string-methods--manipulation)
 12. [Array Methods & Operations](#array-methods--operations)
-13. [Object Manipulation](#object-manipulation)
-14. [Asynchronous JavaScript](#asynchronous-javascript)
-15. [Best Practices & Performance](#best-practices--performance)
+13. [Arrays in JavaScript](#arrays-in-javascript)
+14. [Object Manipulation](#object-manipulation)
+15. [Asynchronous JavaScript](#asynchronous-javascript)
+16. [Best Practices & Performance](#best-practices--performance)
 
 ---
 
@@ -4045,6 +4046,129 @@ for (let i = 0; i < 3; i++) {
 }
 funcs2[0](); // Output: 0
 ```
+
+---
+
+## Arrays in JavaScript
+
+### Overview (array.html)
+
+Arrays are fundamental data structures in JavaScript that allow you to hold multiple values in a single variable at the same time. Arrays are indexed collections where each element can be accessed by its position (starting from 0).
+
+### Basic Array Declaration & Access
+
+```javascript
+// Declare an array
+let arr = [1, 2, 3, 4];
+
+// Print all values in the array
+console.log(arr); // [1, 2, 3, 4]
+
+// Print specific index value
+console.log(arr[0]); // 1
+console.log(arr[2]); // 3
+
+// Get the length of an array
+console.log(arr.length); // 4
+```
+
+**Key Point**: Arrays are zero-indexed, meaning the first element is at index 0.
+
+---
+
+### Essential Array Methods
+
+#### 1. **indexOf()** - Find the index of an element
+
+```javascript
+let arr = [1, 2, 3, 4];
+console.log(arr.indexOf(3)); // 2 (returns the index of element 3)
+console.log(arr.indexOf(5)); // -1 (element not found)
+```
+
+#### 2. **concat()** - Combine arrays
+
+```javascript
+let arr = [1, 2, 3, 4];
+console.log(arr.concat([5, 6])); // [1, 2, 3, 4, 5, 6]
+console.log(arr); // [1, 2, 3, 4] (original array unchanged)
+```
+
+#### 3. **join()** - Convert array to string
+
+```javascript
+let arr = [1, 2, 3, 4];
+console.log(arr.join("-")); // "1-2-3-4"
+console.log(arr.join(" ")); // "1 2 3 4"
+```
+
+#### 4. **pop()** - Remove last element
+
+```javascript
+let arr = [1, 2, 3, 4];
+console.log(arr.pop()); // 4 (returns the removed element)
+console.log(arr); // [1, 2, 3] (original array modified)
+```
+
+#### 5. **push()** - Add element at the end
+
+```javascript
+let arr = [1, 2];
+console.log(arr.push(5)); // 3 (returns new length)
+console.log(arr); // [1, 2, 5]
+```
+
+#### 6. **unshift()** - Add element at the beginning
+
+```javascript
+let arr = [1, 2];
+console.log(arr.unshift(0)); // 3 (returns new length)
+console.log(arr); // [0, 1, 2]
+```
+
+#### 7. **shift()** - Remove first element
+
+```javascript
+let arr = [0, 1, 2, 3, 5];
+console.log(arr.shift()); // 0 (returns the removed element)
+console.log(arr); // [1, 2, 3, 5]
+```
+
+#### 8. **slice()** - Extract a section of array
+
+```javascript
+let arr = [1, 2, 3, 5];
+console.log(arr.slice(1, 3)); // [2, 3] (from index 1 to 3, not including 3)
+console.log(arr.slice(0, 2)); // [1, 2]
+console.log(arr.slice(0, 0)); // [] (empty array)
+console.log(arr); // [1, 2, 3, 5] (original unchanged)
+```
+
+#### 9. **splice()** - Remove/Replace elements
+
+```javascript
+let arr = [1, 2, 3, 5];
+console.log(arr.splice(1, 2)); // [2, 3] (removes 2 elements starting at index 1)
+console.log(arr); // [1, 5] (original array modified)
+```
+
+**Key Difference**: `slice()` returns a new array and doesn't modify the original, while `splice()` modifies the original array.
+
+---
+
+### Array Methods Summary Table
+
+| Method    | Purpose                           | Mutates Array | Returns          |
+| --------- | --------------------------------- | ------------- | ---------------- |
+| push()    | Add element at end                | Yes           | New length       |
+| pop()     | Remove last element               | Yes           | Removed element  |
+| shift()   | Remove first element              | Yes           | Removed element  |
+| unshift() | Add element at beginning          | Yes           | New length       |
+| slice()   | Extract section (non-destructive) | No            | New array        |
+| splice()  | Remove/replace elements           | Yes           | Removed elements |
+| indexOf() | Find index of element             | No            | Index or -1      |
+| concat()  | Combine arrays                    | No            | New array        |
+| join()    | Convert to string                 | No            | String           |
 
 ---
 

@@ -1,0 +1,1 @@
+// list out all bank domains

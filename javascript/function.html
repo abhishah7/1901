@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 1. Load Prism CSS for the "Tomorrow Night" theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- 2. Load Prism JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+
+    <style>
+        /* 3. Use the "language-xxxx" class */
+        pre code {
+            display: block;
+            overflow-x: auto;
+            padding: 1em;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2E3440;
+            /* Dark background */
+            color: #D8DEE9;
+            /* Light text color */
+            padding: 20px;
+        }
+
+        .output {
+            color: #A3BE8C;
+            /* Light Green for output */
+            font-weight: bold;
+        }
+
+        .ans-header {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #EBCB8B;
+            /* Yellow for the answer heading */
+        }
+
+        .explanation {
+            margin-top: 10px;
+            color: #E5E9F0;
+            /* Light gray for explanation text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Function Examples</h2>
+    <hr>
+
+    <div>
+        <h1> Example 1: </h1>
+        <p>What's the difference between function declaration and function expression in terms of hoisting?</p>
+        <p class="explanation">Function declarations are hoisted and can be called before their definition in the code. Function expressions are not hoisted and must be defined before being called.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 2: </h1>
+        <p>greet();</p>
+        <pre><code class="language-javascript">function greet(){
+    console.log("Hello!");
+}</code></pre>
+        <p>Ans or Err and Why</p>
+        <p class="output">output :-  Hello!</p>
+        <p class="explanation">greet() is called, so the function is executed. The function logs "Hello!" to the console.</p></p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 3: </h1>
+        <p>Convert normal function to Arrow Function</p>
+        <pre><code class="language-javascript">function add(a, b){
+    return a + b;
+}</code></pre>
+        <p>Ans And How</p>
+        <p class="output">output :-</p><pre><code class="language-javascript">const add = (a, b) =&gt; a + b;</code></pre>
+        <p class="explanation">The normal function is converted to an arrow function.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 4: </h1>
+        <p>Identify what is parms and what is args</p>
+        <pre><code class="language-javascript">function welcome(name){
+    console.log("Welcome " + name);
+}
+
+welcome("user");</code></pre>
+        <p>Ans and why</p>
+        <p class="output"> param is name, arg is "user"</p>
+        <p class="explanation">welcome user</p>
+    </div>
+
+    <div>
+        <h1> Example 5: </h1>
+        <p>how many parameters and args</p>
+        <pre><code class="language-javascript">function temp (a, b, c){
+    console.log(a,b,c);
+}
+
+temp(1, 2)</code></pre>
+        <p> Ans, Err and Why</p>
+        <p class="output">1,2 , undefined</p>
+        <p class="explanation">The function temp is defined with three parameters (a, b, c) but is called with only two arguments (1, 2). Therefore, c is undefined.</p>
+    </div>
+
+    <div>
+        <h1> Example 6: </h1>
+        <p>Predict the output</p>
+        <pre><code class="language-javascript">function temp_user(name = "Guest"){
+    console.log("Hello " + name);
+}
+
+temp_user();</code></pre>
+        <p>Ans, Err and Why</p>
+        <p class="output">Hello Guest</p>
+        <p class="explanation">The function temp_user is called without any arguments, so the default parameter value "Guest" is used.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 7: </h1>
+        <p>what is ... operator and why use it in function</p>
+        <pre><code class="language-javascript">function number(...numbers){
+    console.log(numbers);
+}
+
+number(1, 2, 3, 4, 5)</code></pre>
+        <p>Ans, Err and why</p>
+        <p class="output">[1, 2, 3, 4, 5]</p>
+        <p class="explanation">The ... operator (spread operator) collects all arguments into an array called numbers.</p>
+    </div>
+    <hr
+
+    <div>
+        <h1> Example 8: </h1>
+        <p>Use rest Parameters to accept any number of scores and return the total</p>
+        <pre><code class="language-javascript">function calculateTotal(...scores){
+    let total = 0;
+    for(let i=0; i<=scores.length; i++){
+        total += scores[i];
+    }
+    return total;
+}</code></pre>
+        <pre><code class="language-javascript">function calculateTotal(...scores){
+    let total = 0;
+    scores.forEach(function(val){
+        total = total + val;
+    });
+    return total;
+}</code></pre>
+        <p>calculateTotal(10, 20 ,30 ,40 ,50)</p>
+        <p> error because for loop goes out of bounds and throws error </p>
+        <p>let sumtotal = calculateTotal(10, 20 ,30 ,40 ,50)</p>
+        <p>Ans, Err and Why</p>
+        <p class="output">150</p>
+        <p class="explanation">The first implementation of calculateTotal has an off-by-one error in the for loop (i should be less than scores.length). The second implementation using forEach correctly sums the scores.</p>
+    </div>
+    <hr>
+
+    <div>
+        <h1> Example 9: </h1>
+        <p>Fix the function using early return</p>
+        <pre><code class="language-javascript">function checkAge(age){
+    if(age < 18){
+        console.log("Too Young");
+    } else {
+        console.log("Access Granted");
+    }
+}</code></pre>
+        <p>Ans And how</p>
+        <p class="output">Too Young or Access Granted</p>
+        <p class="explanation">The function checkAge can be fixed by returning a value instead of just logging it. This allows the caller to handle the result appropriately.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 10: </h1>
+        <p>What is the return value of above function</p>
+        <pre><code class="language-javascript">function f(){ return;}</code></pre>
+        <p>Ans and Why</p>
+        <p class="output"> not return any value (undefined) </p>
+        <p class="explanation">The function f has a return statement without a value, so it returns undefined by default.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 11: </h1>
+        <p>What does is mean when we say "functions are first-class citizens"?</p>
+        <p>Ans and Why </p>
+        <p class="output">Functions can be treated like any other variable. They can be assigned to variables, passed as arguments to other functions, and returned from functions.</p>
+        <p class="explanation">This means that functions have the same capabilities as other data types in the language.</p>
+    </div>
+
+    <div>
+        <h1> Example 12: </h1>
+        <p>Can You assign a function to a variable and then all it?</p>
+        <pre><code class="language-javascript">let a = function(){console.log("Hello");}
+
+a();</code></pre>
+    </div>
+
+    <div>
+        <h1> Example 13: </h1>
+        <p>Pass A function into anthor funtion and excute it inside.</p>
+        <p>Ans and Why, How</p>
+        <pre><code class="language-javascript">function abcd(val){val()}
+
+abcd(function(){ console.log("Hello")})</code></pre>
+<p class="output">Hello</p>
+<p class="explanation">The function abcd takes another function as an argument (val) and calls it inside. When we pass an anonymous function that logs "Hello", it gets executed when abcd is called.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 14: </h1>
+        <p>What is higer order function?</p>
+        <p>Ans and Why</p>
+        <p class="output">A higher-order function is a function that either takes one or more functions as arguments or returns a function as its result.</p>
+        <p class="explanation">Higher-order functions allow for more abstract and flexible code by enabling functions to operate on other functions.</p>
+    </div>
+
+    <div>
+        <h1> Example 15: </h1>
+        <p>Identify what is higher order function?</p>
+        <pre><code class="language-javascript">[1,2, 3].map(function(x){
+    return x * 2;
+})</code></pre>
+        <p>.map is a function</p>
+        <p>Ans and Why</p>
+        <p class="output">.map is a higher-order function because it takes a function as an argument (the function that multiplies each element by 2) and applies it to each element of the array.</p>
+        <p class="explanation">This allows for functional programming techniques to be used with arrays.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 16: </h1>
+        <p>pure or impure function?</p>
+        <pre><code class="language-javascript">let a = 5;
+function num(num){
+total += num;
+}
+
+num(3);</code></pre>
+        <p>Ans and Why</p>
+        <p class="output">Impure Function</p>
+        <p class="explanation">The function num is impure because it modifies a variable (total) that is outside its own scope. A pure function should not have side effects and should always return the same output for the same input.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 17: </h1>
+        <p>convert example 16 function into pure function?</p>
+        <p>Ans and how</p>
+        <pre><code class="language-javascript">function num(total, num){
+    return total + num;
+}</code></pre>
+        <p class="output">pure function</p>
+        <p class="explanation">The modified function num is now pure because it takes total as an argument and returns a new value without modifying any external state.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 18: </h1>
+        <p>What is Closure? When is it created?</p>
+        <p>Ans and Example</p>
+        <p class="output">A closure is a function that retains access to its lexical scope even when the function is executed outside that scope. It is created when a function is defined inside another function and the inner function references variables from the outer function.</p>
+        <pre><code class="language-javascript">function outer(){
+    let count = 0;
+    return function(){
+        count++;
+        console.log(count);
+    };
+}</code></pre>
+        <p class="explanation">In this example, the inner function returned by outer forms a closure that retains access to the count variable even after outer has finished executing.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 19: </h1>
+        <p>What's logged?</p>
+        <pre><code class="language-javascript">function outer(){
+    let count = 0;
+    return function(){
+        count++;
+        console.log(count);
+    };
+}
+
+const counter = outer();
+
+counter();
+counter();</code></pre>
+        <p>Ans, Err and Why</p>
+        <p class="output">1
+2</p>
+        <p class="explanation">When counter() is called the first time, count is incremented from 0 to 1 and logged. On the second call, count is incremented from 1 to 2 and logged. The closure retains access to the count variable between calls.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 20: </h1>
+        <p>Convert below function into an IIFE:</p>
+        <pre><code class="language-javascript">function init(){
+    console.log("Initialized");
+}</code></pre>
+        <p>Ans and Why</p>
+        <p class="output">(function init(){
+    console.log("Initialized");
+})();</p>
+        <p class="explanation">An Immediately Invoked Function Expression (IIFE) is a function that is defined and executed immediately. By wrapping the function in parentheses and adding () at the end, we create an IIFE that runs as soon as it is defined.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 21: </h1>
+        <p>What is the use of IIFE? Name one real-world use case.</p>
+        <pre><code class="language-javascript">let fun=(function(){
+    let score = 0; // this is private variable
+    return{
+        getScore: function(){
+            console.log(score);
+        },
+        setScore: function(val){
+            score = val;
+        }
+    }
+})()</code></pre>
+        <p>Ans and Why</p>
+        <p class="output">IIFE is used to create a private scope for variables and functions, preventing them from polluting the global namespace. A real-world use case is creating modules that encapsulate functionality and state, like in the example above where score is a private variable.</p>
+        <p class="explanation">The IIFE returns an object with methods to get and set the score, while keeping the score variable private.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 22: </h1>
+        <p>What will be the output here and why?</p>
+        <pre><code class="language-javascript">temp_var();
+
+var temp_var = function(){
+    console.log("Hello");
+}</code></pre>
+        <p>Ans and Why</p>
+        <p class="output">TypeError: temp_var is not a function</p>
+        <p class="explanation">In this case, temp_var is declared using var, which hoists the variable declaration but not the assignment. Therefore, when temp_var() is called, it is undefined at that point, leading to a TypeError.</p>
+    </div>
+<hr>
+    <div>
+        <h1> Example 23: </h1>
+        <p>What will be the output here and why?</p>
+        <pre><code class="language-javascript">temp_var();
+
+function temp_var(){
+    console.log("Hello");
+}</code></pre>
+        <p>Ans and Why</p>
+    </div>
+
+    <pre>
+
+    <code class="language-javascript">function temp_var(){
+    console.log("Hello");
+}</code></pre>
+        <p class="output">Hello</p>
+        <p class="explanation">In this case, temp_var is a function declaration, which is hoisted entirely. Therefore, when temp_var() is called, the function is available and executes, logging "Hello" to the console.</p>
+    </div>
+
+ 
+
+</body>
+
+</html>

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 1. Load Prism CSS for the "Tomorrow Night" theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- 2. Load Prism JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+
+    <style>
+        /* 3. Use the "language-xxxx" class */
+        pre code {
+            display: block;
+            overflow-x: auto;
+            padding: 1em;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2E3440;
+            /* Dark background */
+            color: #D8DEE9;
+            /* Light text color */
+            padding: 20px;
+        }
+
+        .output {
+            color: #A3BE8C;
+            /* Light Green for output */
+            font-weight: bold;
+        }
+
+        .ans-header {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #EBCB8B;
+            /* Yellow for the answer heading */
+        }
+
+        .explanation {
+            margin-top: 10px;
+            color: #E5E9F0;
+            /* Light gray for explanation text */
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+
+
+<script>
+
+    // hold multiplle value in a same time using array
+    let arr = [1, 2, 3, 4];
+
+    // print all value in a array 
+    console.log(arr); // [1,2,3,4] 
+
+    // print specific index value
+    console.log(arr[0]); // 1
+    console.log(arr[2]); // 3
+
+    // array methods
+    // push , pop , shift , unshift , slice , splice , indexOf , concat , join
+    // print length of array
+    console.log(arr.length); // 4
+
+    // print index of specific value
+    console.log(arr.indexOf(3)); // 2
+
+    // concatenate two arrays
+    console.log(arr.concat([5, 6])); // [1,2,3,4,5,6]
+
+    // join array elements into a string with a separator
+    console.log(arr.join("-")); // "1-2-3-4"
+
+    // remove last element from array and return it
+    console.log(arr.pop()); // 4
+    console.log(arr); // [1,2,3]
+    console.log(arr.pop(3)); // 3
+    console.log(arr); // [1,2]
+
+    // add element at the end of array and return new length
+    console.log(arr.push(5)); // 4
+
+    // add element at the beginning of array and return new length
+    console.log(arr.unshift(0)); // 5
+    console.log(arr); // [0,1,2,3,5]
+
+    // remove first element from array and return it
+    console.log(arr.shift()); // 0
+    console.log(arr); // [1,2,3,5]
+
+    // extract a section of array and return new array
+    console.log(arr.slice(1, 3)); // [2,3]
+    console.log(arr.splice(1, 2)); // [2,3]
+    console.log(arr.slice(0, 2)); // [1,5]
+    console.log(arr.slice(0, 0)); // []
+    console.log(arr.slice(-1, -1)); // []
+    console.log(arr.slice(-2)); // [1,5]
+
+
+    // splice - add or remove elements from array
+    let splicedArr = [1, 2, 3, 4, 5];
+    splicedArr.splice(2, 1); // remove 1 element at index 2
+    console.log(splicedArr); // [1,2,4,5]
+    splicedArr.splice(2, 0, 3); // add 3 at index 2
+    console.log(splicedArr); // [1,2,3,4,5]
+    splicedArr.splice(1, 2, 6, 7); // remove 2 elements at index 1 and add 6,7
+    console.log(splicedArr); // [1,6,7,4,5]
+
+    // reverse - reverse the array
+    let revArr = [1, 2, 3, 4, 5];
+    revArr.reverse();
+    console.log(revArr); // [5,4,3,2,1]
+
+    // sort - sort the array
+    let sortArr = [3, 1, 4, 5, 2];
+    sortArr.sort();
+    console.log(sortArr); // [1,2,3,4,5]
+    // custom sort
+    let customSortArr = [10, 2, 33, 4, 25];
+    customSortArr.sort((a, b) => a - b);
+    console.log(customSortArr); // [2,4,10,25,33]
+
+    // desending sort
+    customSortArr.sort((a, b) => b - a);
+    console.log(customSortArr); // [33,25,10,4,2]
+
+    let sr = customSortArr.sort(function (a, b) {
+        return a - b;
+    });
+    console.log(sr); // [2,4,10,25,33]
+
+
+
+    // use case - - enter new products into existing producats list
+
+    // let products = ["laptop", "phone", "tablet"];
+    // let newProducts = ["smartwatch", "earbuds"];
+    // products = products.concat(newProducts);
+    // console.log(products); // ["laptop", "phone", "tablet", "smartwatch", "earbuds"]
+
+
+    // Q1. push()
+    // You are building a to-do app. Add a new task 'Buy milk' to the tasks array.
+    let tasks = ['Wake up', 'Brush teeth'];
+
+    tasks.push('drink water');
+    console.log(tasks); // ['Wake up', 'Brush teeth', 'drink water']
+    // explanation: The push() method adds a new element to the end of the array. Here, 'drink water' is added as the last task in the tasks array.
+
+
+
+    // Q2. pop()
+    // Remove the last notification from the notifications array.
+    let notifications = ['Email', 'Message', 'Reminder'];
+
+    notifications.pop();
+    console.log(notifications); // ['Email', 'Message']
+    // explanation: The pop() method removes the last element from the array. Here, 'Reminder' is removed from the notifications array.
+
+
+
+    // Q3. shift()
+    // A queue system removes the first customer. Remove the first customer.
+    let customers = ['Customer1', 'Customer2', 'Customer3'];
+    customers.shift();
+    console.log(customers); // ['Customer2', 'Customer3']
+    // explanation: The shift() method removes the first element from the array. Here, 'Customer1' is removed from the customers array.
+
+
+
+    // Q4. unshift()
+    // A new song is added to the beginning of the playlist.
+    let playlist = ['Song B', 'Song C'];
+    playlist.unshift('Song A');
+    console.log(playlist); // ['Song A', 'Song B', 'Song C']
+    // explanation: The unshift() method adds a new element to the beginning of the array. Here, 'Song A' is added as the first song in the playlist array.
+
+
+
+    // Q5. splice()
+    // In a classroom list, remove 'Alex' and add 'John' and 'Sara' in the same position.
+    let students = ['Mike', 'Alex', 'Emma', 'Sophia'];
+    students.splice(1, 1, 'John', 'Sara');
+    console.log(students); // ['Mike', 'John', 'Sara', 'Emma', 'Sophia']
+    // explanation: The splice() method is used to remove and add elements in an array. Here, at index 1, 'Alex' is removed (1 element) and 'John' and 'Sara' are added in the same position.
+
+
+
+    // Q6. splice()
+    // From the menu, remove 2 items starting from index 1.
+    let menu = ['Burger', 'Pizza', 'Pasta', 'Salad'];
+    menu.splice(1, 2);
+    console.log(menu); // ['Burger', 'Salad']
+    // explanation: The splice() method removes elements from an array. Here, starting from index 1, 2 items ('Pizza' and 'Pasta') are removed from the menu array.
+
+
+
+
+    // Q7. slice()
+    // Create a new array that contains only weekend days.
+    let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    let weekend = days.slice(5);
+    console.log(weekend); // ['Saturday', 'Sunday']
+    // explanation: The slice() method creates a new array by extracting a section of the original array. Here, starting from index 5, 'Saturday' and 'Sunday' are extracted to form the weekend array.
+
+
+
+
+
+    // Q8. reverse()
+    // Reverse the order of levels in a game.
+    let levels = ['Easy', 'Medium', 'Hard'];
+    levels.reverse();
+    console.log(levels); // ['Hard', 'Medium', 'Easy']
+    // explanation: The reverse() method reverses the order of elements in the array. Here, the levels array is reversed so that 'Hard' comes first and 'Easy' comes last.
+
+
+
+
+    // Q9. sort()
+    // Sort the scores in ascending order.
+    let scores = [45, 12, 78, 34, 89];
+    scores.sort((a, b) => a - b);
+    console.log(scores); // [12, 34, 45, 78, 89]
+    // explanation: The sort() method sorts the elements of the array. Here, a custom comparator function (a - b) is used to sort the scores in ascending numerical order.
+
+
+
+    // Q10. sort() with numbers
+    // Sort the prices from lowest to highest.
+    let prices = [199, 49, 999, 299, 149];
+    prices.sort((a, b) => a - b);
+    console.log(prices); // [49, 149, 199, 299, 999]
+    // explanation: The sort() method sorts the elements of the array. Here, a custom comparator function (a - b) is used to sort the prices in ascending numerical order.
+
+
+
+
+    // Q11. slice() vs splice()
+    // From the array, create a new array of the first 3 items WITHOUT changing the original array.
+    let products = ['Laptop', 'Phone', 'Tablet', 'Monitor', 'Keyboard'];
+    let firstThree = products.slice(0, 3);
+    console.log(firstThree); // ['Laptop', 'Phone', 'Tablet']
+    console.log(products); // ['Laptop', 'Phone', 'Tablet', 'Monitor', 'Keyboard']
+
+
+
+
+
+    // Q12. splice() complex
+    // In the array below:
+    // 1. Remove 'Blue'
+    // 2. Add 'Purple' and 'Orange' at the same position
+    let colors = ['Red', 'Green', 'Blue', 'Yellow'];
+    colors.splice(2, 1, 'Purple', 'Orange')
+    console.log(colors); // ['Red', 'Green', 'Purple', 'Orange', 'Yellow']
+
+
+
+
+    // Q13. reverse() + push()
+    // Reverse the array and then add 'Final Step' at the end.
+    let steps = ['Step 1', 'Step 2', 'Step 3'];
+    steps.reverse();
+    steps.push('Starting Step');
+    console.log(steps); // ['Step 3', 'Step 2', 'Step 1', 'Starting Step']
+
+
+    // Q14. sort() strings
+    // Sort names alphabetically, ignoring case sensitivity.
+    let names = ['alice', 'Bob', 'charlie', 'David'];
+    names.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    console.log(names); // ['alice', 'Bob', 'charlie', 'David']
+
+    // Q15. Combination Question
+    // You are managing a movie watchlist:
+    // 1. Add 'Inception'
+    // 2. Remove the first movie
+    // 3. Sort the list alphabetically
+    let movies = ['Avatar', 'Titanic', 'Gladiator'];
+    movies.push('Inception');
+    movies.shift();
+    movies.sort();
+    console.log(movies); // ['Gladiator', 'Inception', 'Titanic']
+
+    // Q16. splice() return value
+    // What does the splice method return in this case?
+    let nums1 = [1, 2, 3, 4];
+    nums1.splice(1, 2);
+    console.log(nums1); // [1, 4]
+
+
+
+
+
+    // Q17. slice() immutability check
+    // After executing slice, does the original array change?
+    let nums2 = [10, 20, 30, 40];
+    let result = nums2.slice(1, 3);
+    console.log(nums2); // [10, 20, 30, 40] - original array unchanged
+    console.log(result); // [20, 30] - new array created
+
+
+    // Q19. reverse() mutation
+    // After reversing, what happens to the original array reference?
+    let letters = ['a', 'b', 'c'];
+    let reversedLetters = letters.reverse();
+    console.log(letters); // ['c', 'b', 'a'] - original array is mutated
+    console.log(reversedLetters); // ['c', 'b', 'a'] - same reference
+
+
+    // Q21. splice() edge case
+    // What happens if deleteCount is 0?
+    let arr1 = ['x', 'y', 'z'];
+    arr1.splice(1, 0, 'new');
+    console.log(arr1); // ['x', 'new', 'y', 'z']
+
+
+
+    // Q23. slice() negative index
+    // What elements are returned?
+    let values = [100, 200, 300, 400, 500];
+    let sliced = values.slice(-3, -1);
+    console.log(sliced); // [300, 400]
+
+
+
+
+    // Q24. splice() vs slice() decision
+    // Which method would you use if you want to:
+    // a) Update the original array
+    // Use splice to update the original array
+    arr1.splice(1, 1, 'updated');
+    console.log(arr1); // original array updated
+
+    // b) Keep the original array unchanged
+    let newValues = values.slice(1, 4);
+    console.log(newValues); // new array created, original unchanged
+
+
+
+
+
+    // Q25. Chained methods (brain teaser)
+    // What is the final value of arr?
+    let arr2 = [1, 2, 3];
+    arr2.push(arr2.shift());
+    console.log(arr2); // [2, 3, 1]
+
+
+
+    console.log("new test")
+
+    let arr11 = [10, 2, 5, 20, 30]
+    console.log(arr11.sort((a, b) => a - b))
+
+    let arr22 = ['b', 'f', 'z', 'q', 'm', 'k']
+    console.log(arr22.sort())
+
+
+    let name = ["bunty", "abhi", "subham", "raja", "rajan"]
+    name.sort().forEach(names => {
+        console.log(names);
+
+    });
+
+    let users = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 25 },
+        { name: "Bob", age: 35 },
+    ];
+
+    let names1 = users.map((user) => user.name);
+    console.log(names1); // Output: ["John", "Jane", "Bob"]
+
+
+
+    let product_data = [{
+        category: "Electonic",
+        name: "Monitor"
+    }, {
+        category: "Electonic",
+        name: "laptop"
+    }
+        , {
+        category: "Electonic",
+        name: "Mobile"
+    },
+    {
+        category: "other",
+        name: "chair"
+    },
+    {
+        category: "Electonic",
+        name: "keyboard"
+    }
+        , {
+        category: "other",
+        name: "pen"
+    }
+        , {
+        category: "Electonic",
+        name: "fan"
+    }
+        , {
+        category: "other",
+        name: "watch"
+    }
+        , {
+        category: "other",
+        name: "bottle"
+    }
+    ]
+
+
+    let elc = product_data.map((data ) => {
+
+        // console.log(data)
+         if( data.category == "Electonic"){
+            console.log(data.name)
+        }
+    }
+)
+
+
+
+console.log("test 44444")
+
+// 1. Double daily steps count
+
+// Real life: Fitness app doubling step goal
+
+const steps1= [1000, 2000, 3000];
+
+function doubleSteps(step) {
+  return step * 2;
+}
+
+const newSteps = steps1.map(doubleSteps);
+console.log(newSteps)
+
+
+
+// 2. Convert minutes to seconds
+
+// Real life: Video duration calculation
+
+const minutes = [1, 5, 10];
+
+const seconds = minutes.map(function(min) {
+  return min * 60;
+});
+console.log(seconds)
+
+
+// 3. Add ₹50 delivery charge to prices
+
+// Real life: Food delivery app
+
+const prices1 = [200, 350, 500];
+
+const finalPrices = prices1.map(price => price + 50);
+console.log(finalPrices)
+
+
+
+// 4. Convert exam marks to grades
+
+// Real life: Result system
+
+const marks = [35, 72, 88, 40];
+
+function getGrade(mark) {
+  return mark >= 40 ? 'Pass' : 'Fail';
+}
+
+const grades = marks.map(getGrade);
+console.log(grades)
+
+
+
+// 5. Capitalize names
+
+// Real life: Display usernames properly
+
+const names2 = ['rahul', 'neha', 'amit'];
+
+const formattedNames = names2.map(name =>
+  name[0].toUpperCase() + name.slice(1)
+);
+
+
+
+// 6. Apply 10% discount
+
+// Real life: Shopping sale
+
+const prices2 = [500, 1000, 1500];
+
+function applyDiscount(price) {
+  return price - price * 0.10;
+}
+
+const discounted = prices2.map(applyDiscount);
+console.log(discounted)
+
+
+
+// 7. Add bonus points to scores based on condition
+
+// Real life: Game scoring system
+
+const scores1 = [45, 60, 85];
+
+const finalScores = scores1.map(score => {
+  if (score >= 80) return score + 20;
+  if (score >= 50) return score + 10;
+  return score;
+});
+
+console.log(finalScores)
+
+
+
+// 8. Convert temperatures with formula
+
+// Real life: Weather app
+
+const celsius = [0, 20, 30];
+
+function toFahrenheit(temp) {
+  return (temp * 9/5) + 32;
+}
+
+const fahrenheit = celsius.map(toFahrenheit);
+console.log(` hh ${fahrenheit} `)
+
+
+
+// 9. Generate table of numbers
+
+// Real life: Math learning app
+
+const numbers = [1, 2, 3, 4];
+
+const tableOfTwo = numbers.map(num => num * 2);
+
+console.log(tableOfTwo)
+
+// map one line example 
+console.log([1,2,3,4,5,6,7,8,9,10].map(t => t * 5))
+
+
+
+// 10. Combine map with string formatting
+
+// Real life: SMS notification system
+
+const balances = [500, 1200, 300];
+
+const messages = balances.map(balance =>
+  `Your balance is ₹${balance}`
+);
+
+console.log(messages)
+
+
+
+// fillter function 
+
+let laptop_price = [15000,20000,30000,65000,99000,43000,10000]
+
+let expensive_laptops = laptop_price.filter((price) => {
+    if(price > 30000) return true;
+})
+
+console.log(expensive_laptops)
+
+// document.cookie = "sessionID=testinguser; max-age=3600; path=/; secure; SameSite=Lax";
+
+// if(confirm("we want to use your cookies comfirm yes or no ")){
+//  console.log(`we used cookies used :- ${document.cookie}`)
+// }else{
+//      console.log(`we used cookies used :- ${document.cookie}`)
+    
+// }
+
+
+let product1 = [{
+    name : "mobile",
+    price : 15000
+},{
+     name : "tablet",
+    price : 20000
+},{
+     name : "laptop",
+    price : 90000
+},{
+     name : "mouse",
+    price : 5000
+},{
+     name : "keyboard",
+    price : 1000
+}
+]
+
+let pro_fil = product1.filter((t) => {
+    if(t.price > 10000){
+        return t.name
+        // return true;
+    }
+});
+
+console.log(pro_fil)
+
+
+
+
+// ### 1. Get even numbers
+// **Real life:** Find even roll numbers
+
+const numbers1 = [1, 2, 3, 4, 5, 6];
+const evenNumbers = numbers1.filter(num => num % 2 === 0);
+
+
+// ### 2. Filter adults
+// **Real life:** Allow only 3+ users
+
+const ages = [2, 1, 10, 16, 5];
+function isAdult(age) {
+  return age >= 18;
+}
+const adults = ages.filter(isAdult);
+
+
+// ### 3. Remove empty items
+// **Real life:** Clean user input
+
+const inputs = ['Hello', '', 'World', '', 'JS'];
+const validInputs = inputs.filter(text => text !== '');
+
+
+// ### 4. Filter passing marks
+// **Real life:** Exam result system
+
+const marks1 = [35, 72, 88, 40, 25];
+const passedStudents = marks1.filter(mark => mark >= 40);
+
+
+// ### 5. Get affordable prices
+// **Real life:** Shopping app price filter
+
+const prices3 = [199, 499, 999, 1499, 299];
+const affordable = prices3.filter(price => price <= 500);
+
+
+// ### 6. Filter long words
+// **Real life:** Search keyword validation
+
+const words = ['hi', 'hello', 'javascript', 'ok'];
+function isLongWord(word) {
+  return word.length > 3;
+}
+const longWords = words.filter(isLongWord);
+
+
+// ### 7. Filter positive numbers
+// **Real life:** Bank transaction validation
+
+const transactions = [200, -100, 500, -50, 300];
+const credits = transactions.filter(amount => amount > 0);
+
+
+
+// ### 8. Filter numbers within a range
+// **Real life:** Score selection
+
+const scores2 = [45, 60, 85, 30, 90];
+const selectedScores = scores2.filter(score => score >= 50 && score <= 90);
+
+ 
+
+
+// reduce 
+let total_price = [15,68,45,58,52,48];
+
+let  final_price = total_price.reduce((accumulator,val) => {
+    return accumulator + val;
+},0)
+
+console.log(final_price)
+
+// work 
+// 15 + 68 = 83
+// 83 + 45 = 128
+// 128 + 58 = 186
+// 186 + 52 = 238
+// 238 + 48 = 286
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ### Q1. Grocery Store – Total Cost
+
+// 1. Keep items costing more than 100
+// 2. Add 5% tax
+// 3. Find total cost
+
+
+const prices4 = [50, 120, 300, 80, 200];
+
+let tot_cost = prices4.filter( price => price > 100).map(val => val * 1.05).reduce((sum,val) => sum + val,0)
+console.log(tot_cost)
+
+
+// ### Q2. Fitness App – Weekly Calories
+
+// 1. Keep days with workout minutes >= 20
+// 2. Convert minutes to calories (1 min = 4 cal)
+// 3. Find total calories
+
+let cal
+
+
+// const minutes = [10, 25, 40, 15, 60];
+
+// ### Q3. Exam Results – Total Passed Marks
+
+// 1. Keep passing marks (>= 40)
+// 2. Find total marks
+
+// ```js
+// const marks = [35, 55, 80, 20, 45];
+// ```
+
+// ---
+
+// ### Q4. Bank App – Total Credits
+
+// 1. Keep only positive transactions
+// 2. Find total credited amount
+
+// ```js
+// const transactions = [500, -200, 1000, -300, 700];
+// ```
+
+// ---
+
+// ### Q5. Online Sale – Discounted Bill
+
+// 1. Keep items above 1000
+// 2. Apply 15% discount
+// 3. Find total payable amount
+
+// ```js
+// const prices = [800, 1500, 3000, 600, 1200];
+// ```
+
+// ---
+
+
+// ### Q6. Attendance – Reward Points
+
+// 1. Keep attendance hours >= 7
+// 2. Convert hours to points (×10)
+// 3. Find total points
+
+// ```js
+// const hours = [5, 7, 8, 6, 9];
+// ```
+
+// ---
+
+// ### Q7. Delivery App – Total Distance
+// 1. Keep trips longer than 5 km
+// 2. Add 1 km bonus per trip
+// 3. Find total distance
+
+// ```js
+// const distances = [3, 6, 10, 4, 8];
+// ```
+
+// ---
+
+// ### Q8. Salary System – Final Salary
+
+// 1. Keep salaries above 20,000
+// 2. Add 2,000 bonus
+// 3. Find total salary payout
+
+// ```js
+// const salaries = [18000, 25000, 30000, 15000];
+// ```
+
+// ---
+
+// ### Q9. Study App – Total Study Time
+
+// 1. Keep sessions longer than 1 hour
+// 2. Convert hours to minutes
+// 3. Find total study minutes
+
+// ```js
+// const hours = [0.5, 1.5, 2, 0.75, 3];
+// ```
+
+// ---
+
+// ### Q10. Electricity Usage – Monthly Bill
+
+// 1. Keep usage above 100 units
+// 2. Multiply by cost per unit (₹6)
+// 3. Find total bill
+
+// ```js
+// const units = [80, 120, 200, 90, 150];
+// ```
+
+// ---
+// ### Q11. Game Scores – Final Power Score
+
+// 1. Keep scores above 40
+// 2. Double each score
+// 3. Find total power score
+
+// ```js
+// const scores = [30, 50, 90, 20, 70];
+// ```
+
+// ---
+
+// ### Q12. Travel App – Total Fare
+
+// 1. Keep rides longer than 10 km
+// 2. Add ₹50 service fee
+// 3. Find total fare
+
+// ```js
+// const rides = [5, 12, 20, 8, 15];
+// ```
+
+// ---
+
+// ### Q13. Office Work – Productive Hours
+
+// 1. Keep hours >= 6
+// 2. Convert hours to minutes
+// 3. Find total productive minutes
+
+// ```js
+// const hours = [4, 6, 8, 5, 9];
+// ```
+
+// ---
+
+// ### Q14. Shopping Cart – Reward Coins
+
+// 1. Keep purchases above ₹500
+// 2. Give 10 coins per purchase
+// 3. Find total coins earned
+
+// ```js
+// const purchases = [300, 800, 1200, 400];
+// ```
+
+// ---
+
+// ### Q15. Fuel App – Total Fuel Cost
+
+// 1. Keep fuel purchases above 5 liters
+// 2. Multiply by ₹105 per liter
+// 3. Find total cost
+
+// ```js
+// const liters = [3, 6, 10, 4, 8];
+// ```
+
+// ---
+
+// ### Q16. Interview Classic – Sum of Cubes
+// 1. Keep odd numbers
+// 2. Cube each number
+// 3. Find total sum
+
+// ```js
+// const numbers = [1, 2, 3, 4, 5];
+// ```
+
+// ---
+
+// ### Q17. Performance Tracking – Bonus Points
+
+// 1. Keep values above average
+// 2. Add 5 bonus points
+// 3. Find total score
+
+// ```js
+// const scores = [10, 20, 30, 40, 50];
+// ```
+
+// ---
+
+// ### Q18. Subscription App – Final Bill
+
+// 1. Keep subscriptions above ₹300
+// 2. Add 18% tax
+// 3. Find final bill
+
+// ```js
+// const plans = [199, 399, 599, 299];
+// ```
+
+// ---
+
+// ### Q19. Learning App – Achievement Score
+
+// 1. Keep scores >= 60
+// 2. Square each score
+// 3. Find total score
+
+// ```js
+// const scores = [45, 60, 70, 30, 80];
+// ```
+
+// ---
+
+// ### Q20. Interview Finisher ⭐
+
+// 1. Keep numbers divisible by 3
+// 2. Multiply by 10
+// 3. Find total sum
+
+// ```js
+// const numbers = [3, 6, 9, 10, 12];
+// ```
+
+// ---
+
+
+// find() return kar chhhe array no element -->  callback no return inside it 
+//  find() 
+
+let product = ["laptop","mobile","tablet","Desktop","smart watch"];
+
+let find_product = product.find((item) => {
+    if(item === "mobile"){
+        return true;
+    }else if(item === "tablet") {
+        return true;
+    }
+    else{
+        return false;
+    }
+});
+
+console.log(find_product)
+
+let people = ["john","sara","mike","anna","david","sara"];
+
+let person = people.find((name) => name === "sara");
+console.log(person)
+
+let allsara = people.filter((name) => name === "sara");
+console.log(allsara)
+ 
+// some() return true or false
+// some() vs find() --> find() return array no element but some() return true or false
+let mark1 = [10,20,35,90];
+let any = marks.some((mark) => {
+    if(mark > 85){
+        return true;
+    }
+});
+
+
+console.log(any)
+
+
+// every() return true or false
+// every() vs find() --> find() return array no element but every() return true or false
+let marks2 = [36,20,35,90];
+let all = marks2.every((mark) => {
+    if(mark > 33){
+        return true;
+    }
+});
+
+console.log(all)
+
+
+// desctructuring
+let arr4 = [1,2,3,4,5,6,7,8,9,10];
+
+let [aa,bb,cc] = arr4;
+console.log(aa,bb,cc)
+console.log("destructuring")
+let [aa1,bb1,...rest] = arr4;
+console.log(aa1,bb1,rest)
+
+let arr3 = [1,2,3,4,5,6,7,8,9,10];
+// let j = arr3[0];
+// let k = arr3[1];
+// let l = arr3[2];
+let [j,k,l] = arr3;
+console.log(j,k,l)
+
+let user_data = ["test","test@gamil.com","male","surat"];
+
+let [name1,email,gender,city] = user_data;
+console.log(`name: ${name1}, email: ${email}, gender: ${gender}, city: ${city}`) // name1,email,gender,city
+
+
+// spread operator
+let arrA = [1,2,3];
+let arrB = [4,5,6];
+let arrC = [...arrA,...arrB];
+console.log(arrC)
+
+
+
+
+</script>
+
+</html>
